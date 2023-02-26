@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600&display=swap');
+body {
+    background-color: #F4F6FA !important;
+    font-family: 'Heebo', sans-serif !important;
+}
+a {
+    color: black !important;
+    text-decoration: none !important;
+}
+a:hover {
+    text-decoration: underline !important;
+}
+hr {
+    color: #FF0000 !important; 
+    width: 100px; 
+    height: 5px !important; 
+    opacity: 1 !important;
+}
+.navbar {
+    background-color: #0179C0; 
+    box-shadow: 0 0 5px black;
+    padding: 20px 0 !important; 
+}
+.navbar-container {
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+.navbar-links {
+    margin: auto 0;
+    text-align: right;
+}
+.navbar-links a {
+    padding: 10.75px 10px; 
+    margin-left: 10px; 
+}
+.navbar-links a:hover {
+    background-color: #015584;
+    border-radius: 10px; 
+}
+.navbar-links a:last-child {
+    padding: 0px; 
+    margin-left: 15px; 
+}
+.navbar-links img {
+    height: 25px;
+}
+.sign-out {
+    color: white; 
+    background-color: #015584;
+    border: 1px solid #015584;
+    border-radius: 10px;
+    font-size: 14px; 
+    height: 45px; 
+    width: 85px; 
+}
+.bank-logo {
+    height: 50px;
+}
+.main-container {
+    padding: 50px 0; 
+    width: 75%;
+    margin: auto; 
+    min-height: 540px;
+}
+.main-container button {
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.main-container button:hover {
+    text-decoration: underline;
+}
+.main-container button:nth-child(1) {
+    color: #E6F9FF;
+    background-color: #0179C0;
+    border: 1px solid #0179C0;
+}
+.main-container button:nth-child(1):hover {
+    background-color: #015584;
+    border: 1px solid #015584;
+}
+.main-container button:nth-child(2) {
+    color: #0179C0;
+    background-color: transparent;
+    border: none;
+}
+.header {
+    margin-bottom: 25px; 
+}
+.success-container {
+    border: 1px solid #2CB82C;
+    color: #2CB82C;
+    padding: 20px;
+}
+.error-container {
+    border: 1px solid #FF0000;
+    color: #FF0000;
+    padding: 20px;
+}
+.success-message,
+.error-message {
+    margin: 0;
+}
+.footer {
+    background-color: white;
+    height: 50px; 
+}
+.footer-container {
+    width: 90%; 
+    margin: auto;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    font-size: 14px;
+}
+.footer-container div a {
+    padding-right: 25px; 
+}
+.footer-container div a img {
+    width: 14px;
+    height: 14px; 
+    margin-bottom: 5px; 
+    margin-left: 5px; 
+}
+.footer-container div:nth-child(1) {
+    height: 15px;
+    margin: auto 0; 
+}
+.footer-container div:nth-child(2) {
+    text-align: right;
+}
+.secure-logo {
+    margin: 5px 0px; 
+    height: 40px;
+    text-align: right;
+}

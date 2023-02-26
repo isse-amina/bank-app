@@ -1,0 +1,29 @@
+.transfer-container {
+    background-color: white;
+    padding: 40px 20px; 
+    margin-top: 20px;
+    margin-bottom: 60px;  
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+}
+.transfer-options {
+    display: grid;
+    grid-template-columns: 15% 80%;
+    grid-column-gap: 5%;
+    grid-row-gap: 40px;
+}
+.transfer-options label {
+    font-weight: bold;
+}
+.transfer-options select,
+.transfer-options input {
+    height: 30px; 
+}
+.transfer-buttons {
+    text-align: right;
+    margin-top: 40px; 
+}
+.transfer-note {
+    line-height: 30px;
+}

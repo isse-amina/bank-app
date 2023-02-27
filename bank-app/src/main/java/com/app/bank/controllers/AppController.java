@@ -179,6 +179,11 @@ public class AppController {
             attributes.addAttribute("status", "failed");
             attributes.addAttribute("error", errorMessage);
         }
+        catch (Exception e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
 
         return "redirect:/transfer";
     }

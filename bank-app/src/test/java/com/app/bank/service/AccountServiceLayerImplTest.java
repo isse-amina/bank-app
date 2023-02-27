@@ -51,7 +51,6 @@ public class AccountServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
-        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -137,7 +136,6 @@ public class AccountServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
-        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }

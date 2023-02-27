@@ -8,7 +8,6 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String debitCard;
 
     public int getId() {
         return id;
@@ -50,24 +49,16 @@ public class User {
         this.password = password;
     }
 
-    public String getDebitCard() {
-        return debitCard;
-    }
-
-    public void setDebitCard(String debitCard) {
-        this.debitCard = debitCard;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email) && password.equals(user.password) && debitCard.equals(user.debitCard);
+        return id == user.id && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, debitCard);
+        return Objects.hash(id, firstName, lastName, email, password);
     }
 }

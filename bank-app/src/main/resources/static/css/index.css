@@ -39,3 +39,13 @@
 .account-sum {
     text-align: right;
 }
+.open-account-prompt {
+    padding: 40px 20px;
+    border: 1px solid #0179C0;
+    color: #0179C0;
+}
+.open-account-prompt p {
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+}

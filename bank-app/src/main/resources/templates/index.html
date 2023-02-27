@@ -42,8 +42,11 @@
             <span>Welcome back, </span><span th:text="${user.firstName} + '!'">User Name</span>
         </div>
         <div>
-            <h4 th:if="${#lists.size(bankAccounts) != 0}">Bank Accounts</h4>
-            <div th:each="bankAccount : ${bankAccounts}" class="account-container">
+            <h4>Bank Accounts</h4>
+            <div th:if="${#lists.size(bankAccounts) == 0}" class="open-account-prompt">
+                <p>Please contact the bank to open a new bank account.</p>
+            </div>
+            <div th:if="${#lists.size(bankAccounts) != 0}" th:each="bankAccount : ${bankAccounts}" class="account-container">
                 <a th:href="@{/history(id=${bankAccount.id})}">
                     <span class="account-type">
                         <p th:text="${bankAccount.name} + ' ' + ${bankAccount.type}">Bank Account Name and Type</p>
@@ -55,8 +58,11 @@
             </div>
         </div>
         <div>
-            <h4 th:if="${#lists.size(creditCards) != 0}">Credit Cards</h4>
-            <div th:each="creditCard : ${creditCards}" class="account-container">
+            <h4>Credit Cards</h4>
+            <div th:if="${#lists.size(creditCards) == 0}" class="open-account-prompt">
+                <p>Please contact the bank to open a new credit card.</p>
+            </div>
+            <div th:if="${#lists.size(creditCards) != 0}" th:each="creditCard : ${creditCards}" class="account-container">
                 <a th:href="@{/history(id=${creditCard.id})}">
                     <span class="account-type">
                         <p th:text="${creditCard.name} + ' ' + ${creditCard.type}">Credit Card Name and Type</p>

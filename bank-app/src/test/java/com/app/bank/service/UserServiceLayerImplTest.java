@@ -53,8 +53,53 @@ public class UserServiceLayerImplTest {
         exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
         assertTrue(exception.getMessage().equals("User's last name cannot be empty."));
 
-        // test 5: user properties validated
+        // test 5: user email is null
         user.setLastName("Einstein");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's email cannot be empty."));
+
+        // test 6: user email is blank
+        user.setEmail("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's email cannot be empty."));
+
+        // test 7: user password is null
+        user.setEmail("ae@gmail.com");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's password cannot be empty."));
+
+        // test 8: user password is blank
+        user.setPassword("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's password cannot be empty."));
+
+        // test 9: user debit card number is null
+        user.setPassword("temp");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's debit card number cannot be empty."));
+
+        // test 10: user debit card number is blank
+        user.setDebitCard("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's debit card number cannot be empty."));
+
+        // test 11: user debit card number does not only contain numerical values
+        user.setDebitCard("A11122223333");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("Debit card number must only contain numerical values."));
+
+        // test 12: user debit card number is negative
+        user.setDebitCard("-11122223333");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("Debit card number must only contain numerical values."));
+
+        // test 13: user debit card number does not consist of 12 digits
+        user.setDebitCard("11112222333");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("Debit card number must consist of 12 digits."));
+
+        // test 14: user properties validated
+        user.setDebitCard("111122223333");
         assertDoesNotThrow(() -> userServiceLayer.validateUserProperties(user));
         try {
             userServiceLayer.addUser(user);
@@ -70,6 +115,9 @@ public class UserServiceLayerImplTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }

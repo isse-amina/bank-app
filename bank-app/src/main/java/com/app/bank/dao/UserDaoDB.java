@@ -42,11 +42,14 @@ public class UserDaoDB implements UserDao {
     @Override
     @Transactional
     public User addUser(User user) {
-        final String ADD_USER = "INSERT INTO Users(user_first_name, user_last_name) " +
-                "VALUES(?,?)";
+        final String ADD_USER = "INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_debit_card) " +
+                "VALUES(?,?,?,?,?)";
         jdbc.update(ADD_USER,
                 user.getFirstName(),
-                user.getLastName());
+                user.getLastName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getDebitCard());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         user.setId(newId);
@@ -56,11 +59,14 @@ public class UserDaoDB implements UserDao {
     @Override
     public void updateUser(User user) {
         final String UPDATE_USER = "UPDATE Users " +
-                "SET user_first_name = ?, user_last_name = ? " +
+                "SET user_first_name = ?, user_last_name = ?, user_email = ?, user_password = ?, user_debit_card = ? " +
                 "WHERE user_id = ?";
         jdbc.update(UPDATE_USER,
                 user.getFirstName(),
                 user.getLastName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getDebitCard(),
                 user.getId());
     }
 
@@ -79,6 +85,9 @@ public class UserDaoDB implements UserDao {
             user.setId(rs.getInt("user_id"));
             user.setFirstName(rs.getString("user_first_name"));
             user.setLastName(rs.getString("user_last_name"));
+            user.setEmail(rs.getString("user_email"));
+            user.setPassword(rs.getString("user_password"));
+            user.setDebitCard(rs.getString("user_debit_card"));
 
             return user;
         }

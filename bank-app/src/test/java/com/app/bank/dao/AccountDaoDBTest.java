@@ -36,12 +36,15 @@ public class AccountDaoDBTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         userDao.addUser(user);
 
         Account account = new Account();
         account.setName("Chequing");
         account.setType("Account");
-        account.setNumber("1234567890");
+        account.setNumber("1234567");
         account.setBalance(new BigDecimal("100.00"));
         account.setAccountOwnerId(user.getId());
 
@@ -56,12 +59,15 @@ public class AccountDaoDBTest {
         User user1 = new User();
         user1.setFirstName("Albert");
         user1.setLastName("Einstein");
+        user1.setEmail("ae@gmail.com");
+        user1.setPassword("temp");
+        user1.setDebitCard("111122223333");
         userDao.addUser(user1);
 
         Account account1 = new Account();
         account1.setName("Chequing");
         account1.setType("Account");
-        account1.setNumber("1234567890");
+        account1.setNumber("1234567");
         account1.setBalance(new BigDecimal("100.00"));
         account1.setAccountOwnerId(user1.getId());
         accountDao.addAccount(account1);
@@ -69,7 +75,7 @@ public class AccountDaoDBTest {
         Account account2 = new Account();
         account2.setName("Saving");
         account2.setType("Account");
-        account2.setNumber("2345678901");
+        account2.setNumber("2345678");
         account2.setBalance(new BigDecimal("200.00"));
         account2.setAccountOwnerId(user1.getId());
         accountDao.addAccount(account2);
@@ -77,12 +83,15 @@ public class AccountDaoDBTest {
         User user2 = new User();
         user2.setFirstName("Isaac");
         user2.setLastName("Newton");
+        user2.setEmail("in@gmail.com");
+        user2.setPassword("temp");
+        user2.setDebitCard("222233334444");
         userDao.addUser(user2);
 
         Account account3 = new Account();
         account3.setName("Chequing");
         account3.setType("Account");
-        account3.setNumber("3456789012");
+        account3.setNumber("3456789");
         account3.setBalance(new BigDecimal("300.00"));
         account3.setAccountOwnerId(user2.getId());
         accountDao.addAccount(account3);
@@ -90,7 +99,7 @@ public class AccountDaoDBTest {
         Account account4 = new Account();
         account4.setName("Saving");
         account4.setType("Account");
-        account4.setNumber("4567890123");
+        account4.setNumber("4567890");
         account4.setBalance(new BigDecimal("400.00"));
         account4.setAccountOwnerId(user2.getId());
         accountDao.addAccount(account4);
@@ -115,12 +124,15 @@ public class AccountDaoDBTest {
         User user1 = new User();
         user1.setFirstName("Albert");
         user1.setLastName("Einstein");
+        user1.setEmail("ae@gmail.com");
+        user1.setPassword("temp");
+        user1.setDebitCard("111122223333");
         userDao.addUser(user1);
 
         Account account1 = new Account();
         account1.setName("Chequing");
         account1.setType("Account");
-        account1.setNumber("1234567890");
+        account1.setNumber("1234567");
         account1.setBalance(new BigDecimal("100.00"));
         account1.setAccountOwnerId(user1.getId());
         accountDao.addAccount(account1);
@@ -128,7 +140,7 @@ public class AccountDaoDBTest {
         Account account2 = new Account();
         account2.setName("Saving");
         account2.setType("Account");
-        account2.setNumber("2345678901");
+        account2.setNumber("2345678");
         account2.setBalance(new BigDecimal("200.00"));
         account2.setAccountOwnerId(user1.getId());
         accountDao.addAccount(account2);
@@ -136,12 +148,15 @@ public class AccountDaoDBTest {
         User user2 = new User();
         user2.setFirstName("Isaac");
         user2.setLastName("Newton");
+        user2.setEmail("in@gmail.com");
+        user2.setPassword("temp");
+        user2.setDebitCard("222233334444");
         userDao.addUser(user2);
 
         Account account3 = new Account();
         account3.setName("Chequing");
         account3.setType("Account");
-        account3.setNumber("3456789012");
+        account3.setNumber("3456789");
         account3.setBalance(new BigDecimal("300.00"));
         account3.setAccountOwnerId(user2.getId());
         accountDao.addAccount(account3);
@@ -149,7 +164,7 @@ public class AccountDaoDBTest {
         Account account4 = new Account();
         account4.setName("Saving");
         account4.setType("Account");
-        account4.setNumber("4567890123");
+        account4.setNumber("4567890");
         account4.setBalance(new BigDecimal("400.00"));
         account4.setAccountOwnerId(user2.getId());
         accountDao.addAccount(account4);
@@ -178,12 +193,15 @@ public class AccountDaoDBTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         userDao.addUser(user);
 
         Account account = new Account();
         account.setName("Chequing");
         account.setType("Account");
-        account.setNumber("1234567890");
+        account.setNumber("1234567");
         account.setBalance(new BigDecimal("100.00"));
         account.setAccountOwnerId(user.getId());
         accountDao.addAccount(account);
@@ -192,7 +210,7 @@ public class AccountDaoDBTest {
 
         account.setName("Saving");
         account.setType("Account");
-        account.setNumber("2345678901");
+        account.setNumber("2345678");
         account.setBalance(new BigDecimal("200.00"));
         account.setAccountOwnerId(user.getId());
         accountDao.updateAccount(account);
@@ -202,11 +220,11 @@ public class AccountDaoDBTest {
         assertNotEquals(initialAccount, updatedAccount);
         assertEquals(initialAccount.getName(), "Chequing");
         assertEquals(initialAccount.getType(), "Account");
-        assertEquals(initialAccount.getNumber(), "1234567890");
+        assertEquals(initialAccount.getNumber(), "1234567");
         assertEquals(initialAccount.getBalance(), new BigDecimal("100.00"));
         assertEquals(updatedAccount.getName(), "Saving");
         assertEquals(updatedAccount.getType(), "Account");
-        assertEquals(updatedAccount.getNumber(), "2345678901");
+        assertEquals(updatedAccount.getNumber(), "2345678");
         assertEquals(updatedAccount.getBalance(), new BigDecimal("200.00"));
     }
 
@@ -215,12 +233,15 @@ public class AccountDaoDBTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         userDao.addUser(user);
 
         Account account = new Account();
         account.setName("Chequing");
         account.setType("Account");
-        account.setNumber("1234567890");
+        account.setNumber("1234567");
         account.setBalance(new BigDecimal("100.00"));
         account.setAccountOwnerId(user.getId());
         accountDao.addAccount(account);

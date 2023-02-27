@@ -49,6 +49,9 @@ public class AccountServiceLayerImplTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -96,22 +99,22 @@ public class AccountServiceLayerImplTest {
         assertTrue(exception.getMessage().equals("Account number cannot be empty."));
 
         // test 8: account number does not only contain numerical values
-        account.setNumber("A234567890");
+        account.setNumber("A234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number must only contain numerical values."));
 
         // test 9: account number is negative
-        account.setNumber("-234567890");
+        account.setNumber("-234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number must only contain numerical values."));
 
-        // test 10: account number does not consist of 10 digits
-        account.setNumber("234567890");
+        // test 10: bank account number does not consist of 7 digits
+        account.setNumber("123456");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
-        assertTrue(exception.getMessage().equals("Account number must consist of 10 digits."));
+        assertTrue(exception.getMessage().equals("Bank account number must consist of 7 digits."));
 
         // test 11: account balance is null
-        account.setNumber("1234567890");
+        account.setNumber("1234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account balance cannot be null."));
 
@@ -132,6 +135,9 @@ public class AccountServiceLayerImplTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -141,7 +147,7 @@ public class AccountServiceLayerImplTest {
         Account account = new Account();
         account.setName("Chequing");
         account.setType("Account");
-        account.setNumber("1234567890");
+        account.setNumber("1234567");
         account.setBalance(new BigDecimal("100.00"));
         account.setAccountOwnerId(user.getId());
         try {

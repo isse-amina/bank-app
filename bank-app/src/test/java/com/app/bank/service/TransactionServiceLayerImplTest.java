@@ -58,6 +58,9 @@ public class TransactionServiceLayerImplTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -69,7 +72,7 @@ public class TransactionServiceLayerImplTest {
         Account account1 = new Account();
         account1.setName("Chequing");
         account1.setType("Account");
-        account1.setNumber("1234567890");
+        account1.setNumber("1234567");
         account1.setBalance(new BigDecimal("100.00"));
         account1.setAccountOwnerId(user.getId());
         try {
@@ -88,7 +91,7 @@ public class TransactionServiceLayerImplTest {
         Account account2 = new Account();
         account2.setName("Saving");
         account2.setType("Account");
-        account2.setNumber("2345678901");
+        account2.setNumber("2345678");
         account2.setBalance(new BigDecimal("200.00"));
         account2.setAccountOwnerId(user.getId());
         try {
@@ -153,6 +156,9 @@ public class TransactionServiceLayerImplTest {
         User user = new User();
         user.setFirstName("Albert");
         user.setLastName("Einstein");
+        user.setEmail("ae@gmail.com");
+        user.setPassword("temp");
+        user.setDebitCard("111122223333");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -162,7 +168,7 @@ public class TransactionServiceLayerImplTest {
         Account account1 = new Account();
         account1.setName("Chequing");
         account1.setType("Account");
-        account1.setNumber("1234567890");
+        account1.setNumber("1234567");
         account1.setBalance(new BigDecimal("100.00"));
         account1.setAccountOwnerId(user.getId());
         try {
@@ -174,7 +180,7 @@ public class TransactionServiceLayerImplTest {
         Account account2 = new Account();
         account2.setName("Saving");
         account2.setType("Account");
-        account2.setNumber("2345678901");
+        account2.setNumber("2345678");
         account2.setBalance(new BigDecimal("200.00"));
         account2.setAccountOwnerId(user.getId());
         try {

@@ -81,8 +81,18 @@ public class AccountServiceLayerImpl implements AccountServiceLayer {
         catch (NumberFormatException e) {
             throw new AccountException("Account number must only contain numerical values.");
         }
-        if (accountNumber.length() != 10) {
-            throw new AccountException("Account number must consist of 10 digits.");
+        if (accountType.equalsIgnoreCase("account")) {
+            if (accountNumber.length() != 7) {
+                throw new AccountException("Bank account number must consist of 7 digits.");
+            }
+        }
+        else if (accountType.equalsIgnoreCase("credit card")) {
+            if (accountNumber.length() != 12) {
+                throw new AccountException("Credit card number must consist of 12 digits.");
+            }
+        }
+        else {
+            throw  new AccountException("Account type must be 'Account' or 'Credit Card'.");
         }
         BigDecimal accountBalance = account.getBalance();
         if (accountBalance == null) {

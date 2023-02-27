@@ -43,18 +43,20 @@ public class AppController {
         List<Account> bankAccounts = new ArrayList<>();
         List<Account> creditCards = new ArrayList<>();
         for (Account account : accounts) {
+            String accountType = account.getType();
             String accountNumber = account.getNumber();
-            accountNumber = new StringBuilder(accountNumber).insert(4, " ").insert(8, "-").toString();
-            account.setNumber(accountNumber);
-
-            String accountType = account.getType().toLowerCase();
             if (accountType.equalsIgnoreCase("account")) {
+                accountNumber = new StringBuilder(accountNumber).insert(3, " ").toString();
                 bankAccounts.add(account);
-            } else if (accountType.equalsIgnoreCase("credit card")) {
+            }
+            else if (accountType.equalsIgnoreCase("credit card")) {
+                accountNumber = new StringBuilder(accountNumber).insert(4, " ").insert(9, " ").toString();
                 creditCards.add(account);
-            } else {
+            }
+            else {
                 throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
             }
+            account.setNumber(accountNumber);
         }
 
         model.addAttribute("user", user);
@@ -68,8 +70,17 @@ public class AppController {
     public String viewOrganizations(HttpServletRequest request, Model model) throws AccountException {
         int accountId = Integer.parseInt(request.getParameter("id"));
         Account account = accountServiceLayer.getAccountById(accountId);
+        String accountType = account.getType();
         String accountNumber = account.getNumber();
-        accountNumber = new StringBuilder(accountNumber).insert(4, " ").insert(8, "-").toString();
+        if (accountType.equalsIgnoreCase("account")) {
+            accountNumber = new StringBuilder(accountNumber).insert(3, " ").toString();
+        }
+        else if (accountType.equalsIgnoreCase("credit card")) {
+            accountNumber = new StringBuilder(accountNumber).insert(4, " ").insert(9, " ").toString();
+        }
+        else {
+            throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
+        }
         account.setNumber(accountNumber);
 
         List<Transaction> transactions = transactionServiceLayer.getTransactionsByAccountId(accountId);

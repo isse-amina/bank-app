@@ -50,6 +50,27 @@ public class UserServiceLayerImpl implements UserServiceLayer {
         if (user.getLastName() == null || user.getLastName().isBlank()) {
             throw new UserException("User's last name cannot be empty.");
         }
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new UserException("User's email cannot be empty.");
+        }
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new UserException("User's password cannot be empty.");
+        }
+        if (user.getDebitCard() == null || user.getDebitCard().isBlank()) {
+            throw new UserException("User's debit card number cannot be empty.");
+        }
+        try {
+            Long debitCardNumberLong = Long.parseLong(user.getDebitCard());
+            if (debitCardNumberLong != Math.abs(debitCardNumberLong)) {
+                throw new NumberFormatException();
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new UserException("Debit card number must only contain numerical values.");
+        }
+        if (user.getDebitCard().length() != 12) {
+            throw new UserException("Debit card number must consist of 12 digits.");
+        }
     }
 
     @Override

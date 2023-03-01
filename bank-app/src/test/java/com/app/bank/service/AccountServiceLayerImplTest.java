@@ -51,6 +51,7 @@ public class AccountServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -82,7 +83,7 @@ public class AccountServiceLayerImplTest {
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account type cannot be empty."));
 
-        // test 5: account type does not contain "Chequing", "Saving" or "Credit Card"
+        // test 5: account type is neither account nor credit card
         account.setType("Testing");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account type must be 'Account' or 'Credit Card'."));
@@ -136,6 +137,7 @@ public class AccountServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }

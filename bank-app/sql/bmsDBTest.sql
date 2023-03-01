@@ -7,7 +7,8 @@ CREATE TABLE Users (
     user_first_name VARCHAR(50) NOT NULL,
     user_last_name VARCHAR(50) NOT NULL,
     user_email VARCHAR(50) NOT NULL UNIQUE,
-    user_password VARCHAR(50) NOT NULL
+    user_password VARCHAR(50) NOT NULL,
+    user_role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Accounts (

@@ -40,15 +40,30 @@ public class UserDaoDB implements UserDao {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        try {
+            final String GET_USER_BY_EMAIL = "SELECT * " +
+                    "FROM Users " +
+                    "WHERE user_email = ?";
+            User user = jdbc.queryForObject(GET_USER_BY_EMAIL, new UserMapper(), email);
+            return user;
+        }
+        catch(DataAccessException ex) {
+            return null;
+        }
+    }
+
+    @Override
     @Transactional
     public User addUser(User user) {
-        final String ADD_USER = "INSERT INTO Users(user_first_name, user_last_name, user_email, user_password) " +
-                "VALUES(?,?,?,?)";
+        final String ADD_USER = "INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role) " +
+                "VALUES(?,?,?,?,?)";
         jdbc.update(ADD_USER,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword());
+                user.getPassword(),
+                user.getRole());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         user.setId(newId);
@@ -58,13 +73,14 @@ public class UserDaoDB implements UserDao {
     @Override
     public void updateUser(User user) {
         final String UPDATE_USER = "UPDATE Users " +
-                "SET user_first_name = ?, user_last_name = ?, user_email = ?, user_password = ? " +
+                "SET user_first_name = ?, user_last_name = ?, user_email = ?, user_password = ?, user_role = ? " +
                 "WHERE user_id = ?";
         jdbc.update(UPDATE_USER,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getRole(),
                 user.getId());
     }
 
@@ -85,6 +101,7 @@ public class UserDaoDB implements UserDao {
             user.setLastName(rs.getString("user_last_name"));
             user.setEmail(rs.getString("user_email"));
             user.setPassword(rs.getString("user_password"));
+            user.setRole(rs.getString("user_role"));
 
             return user;
         }

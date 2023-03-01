@@ -7,7 +7,8 @@ CREATE TABLE Users (
     user_first_name VARCHAR(50) NOT NULL,
     user_last_name VARCHAR(50) NOT NULL,
     user_email VARCHAR(50) NOT NULL UNIQUE,
-    user_password VARCHAR(50) NOT NULL
+    user_password VARCHAR(50) NOT NULL,
+    user_role VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE Accounts (
@@ -32,10 +33,10 @@ CREATE TABLE Transactions (
     FOREIGN KEY (to_account) REFERENCES Accounts(account_id) ON DELETE CASCADE
 );
 
-INSERT INTO Users(user_first_name, user_last_name, user_email, user_password)
-VALUES("Albert", "Einstein", "ae@gmail.com", "temp");
-INSERT INTO Users(user_first_name, user_last_name, user_email, user_password)
-VALUES("Isaac", "Newton", "in@gmail.com", "temp");
+INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role)
+VALUES("Albert", "Einstein", "ae@gmail.com", "temp", "user");
+INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role)
+VALUES("Isaac", "Newton", "in@gmail.com", "temp", "user");
 INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
 VALUES("Chequing", "Account", "1234567", "1000.00", 1);
 INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)

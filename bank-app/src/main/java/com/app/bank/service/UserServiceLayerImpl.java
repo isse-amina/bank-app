@@ -56,6 +56,12 @@ public class UserServiceLayerImpl implements UserServiceLayer {
         if (user.getPassword() == null || user.getPassword().isBlank()) {
             throw new UserException("User's password cannot be empty.");
         }
+        if (user.getRole() == null || user.getRole().isBlank()) {
+            throw new UserException("User's role cannot be empty.");
+        }
+        if (!user.getRole().equalsIgnoreCase("user") && !user.getRole().equalsIgnoreCase("admin")) {
+            throw new UserException("User's role must be 'User' or 'Admin'.");
+        }
     }
 
     @Override

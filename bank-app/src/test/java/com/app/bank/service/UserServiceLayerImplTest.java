@@ -73,8 +73,23 @@ public class UserServiceLayerImplTest {
         exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
         assertTrue(exception.getMessage().equals("User's password cannot be empty."));
 
-        // test 9: user properties validated
+        // test 9: user role is null
         user.setPassword("temp");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's role cannot be empty."));
+
+        // test 10: user role is blank
+        user.setRole("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's role cannot be empty."));
+
+        // test 11: user role is neither user nor admin
+        user.setRole("testing");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        assertTrue(exception.getMessage().equals("User's role must be 'User' or 'Admin'."));
+
+        // test 12: user properties validated
+        user.setRole("user");
         assertDoesNotThrow(() -> userServiceLayer.validateUserProperties(user));
         try {
             userServiceLayer.addUser(user);
@@ -92,6 +107,7 @@ public class UserServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }

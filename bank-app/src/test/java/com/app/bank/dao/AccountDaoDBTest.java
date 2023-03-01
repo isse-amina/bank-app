@@ -38,6 +38,7 @@ public class AccountDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account = new Account();
@@ -60,6 +61,7 @@ public class AccountDaoDBTest {
         user1.setLastName("Einstein");
         user1.setEmail("ae@gmail.com");
         user1.setPassword("temp");
+        user1.setRole("user");
         userDao.addUser(user1);
 
         Account account1 = new Account();
@@ -83,6 +85,7 @@ public class AccountDaoDBTest {
         user2.setLastName("Newton");
         user2.setEmail("in@gmail.com");
         user2.setPassword("temp");
+        user2.setRole("user");
         userDao.addUser(user2);
 
         Account account3 = new Account();
@@ -123,6 +126,7 @@ public class AccountDaoDBTest {
         user1.setLastName("Einstein");
         user1.setEmail("ae@gmail.com");
         user1.setPassword("temp");
+        user1.setRole("user");
         userDao.addUser(user1);
 
         Account account1 = new Account();
@@ -146,6 +150,7 @@ public class AccountDaoDBTest {
         user2.setLastName("Newton");
         user2.setEmail("in@gmail.com");
         user2.setPassword("temp");
+        user2.setRole("user");
         userDao.addUser(user2);
 
         Account account3 = new Account();
@@ -190,6 +195,7 @@ public class AccountDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account = new Account();
@@ -229,6 +235,7 @@ public class AccountDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account = new Account();

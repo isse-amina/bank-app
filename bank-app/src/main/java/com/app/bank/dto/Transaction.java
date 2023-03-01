@@ -2,7 +2,6 @@ package com.app.bank.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class Transaction {

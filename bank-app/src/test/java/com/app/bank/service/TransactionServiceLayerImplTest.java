@@ -60,6 +60,7 @@ public class TransactionServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -175,6 +176,7 @@ public class TransactionServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -236,6 +238,7 @@ public class TransactionServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         try {
             user = userServiceLayer.addUser(user);
         }

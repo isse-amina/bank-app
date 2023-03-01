@@ -46,6 +46,7 @@ public class TransactionDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account1 = new Account();
@@ -83,6 +84,7 @@ public class TransactionDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account1 = new Account();
@@ -131,6 +133,7 @@ public class TransactionDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account1 = new Account();
@@ -201,6 +204,7 @@ public class TransactionDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account1 = new Account();
@@ -254,6 +258,7 @@ public class TransactionDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         Account account1 = new Account();

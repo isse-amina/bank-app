@@ -30,6 +30,7 @@ public class UserDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
 
         User fromAdd = userDao.addUser(user);
         User fromGet = userDao.getUserById(fromAdd.getId());
@@ -44,6 +45,7 @@ public class UserDaoDBTest {
         user1.setLastName("Einstein");
         user1.setEmail("ae@gmail.com");
         user1.setPassword("temp");
+        user1.setRole("user");
         userDao.addUser(user1);
 
         User user2 = new User();
@@ -51,6 +53,7 @@ public class UserDaoDBTest {
         user2.setLastName("Newton");
         user2.setEmail("in@gmail.com");
         user2.setPassword("temp");
+        user2.setRole("user");
         userDao.addUser(user2);
 
         List<User> users = userDao.getAllUsers();
@@ -66,6 +69,7 @@ public class UserDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         User initialUser = userDao.getUserById(user.getId());
@@ -74,6 +78,7 @@ public class UserDaoDBTest {
         user.setLastName("Newton");
         user.setEmail("in@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.updateUser(user);
 
         User updatedUser = userDao.getUserById(user.getId());
@@ -83,10 +88,12 @@ public class UserDaoDBTest {
         assertEquals(initialUser.getLastName(), "Einstein");
         assertEquals(initialUser.getEmail(), "ae@gmail.com");
         assertEquals(initialUser.getPassword(), "temp");
+        assertEquals(initialUser.getRole(), "user");
         assertEquals(updatedUser.getFirstName(), "Isaac");
         assertEquals(updatedUser.getLastName(), "Newton");
         assertEquals(updatedUser.getEmail(), "in@gmail.com");
         assertEquals(updatedUser.getPassword(), "temp");
+        assertEquals(updatedUser.getRole(), "user");
     }
 
     @Test
@@ -96,6 +103,7 @@ public class UserDaoDBTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
+        user.setRole("user");
         userDao.addUser(user);
 
         assertTrue(userDao.getUserById(user.getId()) != null);

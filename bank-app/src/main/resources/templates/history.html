@@ -43,7 +43,7 @@
                 <p>Date</p>
                 <p>Amount</p>
             </div>
-            <div th:each="transaction : ${transactions}" >
+            <div th:each="transaction : ${transactions}">
                 <p th:text="${transaction.id}" class="transaction-history">Transaction Id</p>
                 <p th:if="${account.name != transaction.fromAccount.name}" th:text="'From ' + ${transaction.fromAccount.name}" class="transaction-type">From Account Name</p>
                 <p th:if="${account.name != transaction.toAccount.name}" th:text="'To ' + ${transaction.toAccount.name}" class="transaction-type">To Account Name</p>

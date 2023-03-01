@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+.admin {
+    background-color: #F4FAF6 !important;
+    font-family: 'Quicksand', sans-serif !important;
+}
+.admin .navbar {
+    background-color: #01C07A;
+}
+.admin .navbar-links a:hover {
+    background-color: #018454;
+}
+.admin .navbar-links img {
+    height: 35px; 
+}
+.admin .sign-out {
+    background-color: #018454;
+    border: 1px solid #018454; 
+}
+.add-container,
+.view-container {
+    background-color: white;
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+    padding: 40px 40px;
+}
+.add-container {
+    display: grid;
+    grid-template-columns: 85% 10%;
+    grid-gap: 5%;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.add-container span:nth-child(2) {
+    text-align: right;
+}
+.add-container img {
+    height: 50px;
+}
+.add-container img:hover {
+    cursor: pointer;
+}
+.table-row {
+    display: grid;
+    padding: 10px 0;
+    border-bottom: 1px solid #E8E8E8;
+}
+.view-table.users .table-row {
+    grid-template-columns: 10% 20% 25% 10% 10% 15%;
+    grid-gap: 2%;
+}
+.view-table.accounts .table-row {
+    grid-template-columns: 10% 25% 20% 20% 15%;
+    grid-gap: 2%;
+}
+.view-table.transactions .table-row {
+    grid-template-columns: 10% 15% 20% 20% 10% 15%;
+    grid-gap: 2%;
+}
+.table-row a {
+    text-decoration: underline;
+}
+.table-row.table-header {
+    margin-top: 10px;
+    font-weight: 600;
+    border-bottom: 1px solid #D3D3D3;
+}
+.table-details {
+    margin-top: 25px;
+    padding: 15px 10px;
+    border: 1px solid #018454;
+    color: #018454;
+    display: flex;
+    align-items: center;
+}
+.table-details img {
+    height: 20px;
+    margin-right: 10px;
+}

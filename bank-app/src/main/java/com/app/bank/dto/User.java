@@ -51,7 +51,7 @@ public class User {
     }
 
     public String getRole() {
-        return role;
+        return role.toLowerCase();
     }
 
     public void setRole(String role) {

@@ -152,7 +152,7 @@ public class TransactionDaoDBTest {
         Account account3 = new Account();
         account3.setName("Cash Back");
         account3.setType("Credit Card");
-        account3.setNumber("3456789012");
+        account3.setNumber("345678901234");
         account3.setBalance(new BigDecimal("300.00"));
         account3.setAccountOwnerId(user.getId());
         accountDao.addAccount(account3);

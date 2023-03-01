@@ -136,31 +136,12 @@ public class AppController {
             int accountId = Integer.parseInt(request.getParameter("account"));
             BigDecimal transactionAmount = new BigDecimal(request.getParameter("transfer-amount"));
 
-            Account bankAccount = accountServiceLayer.getAccountById(bankAccountId);
-            Account account = accountServiceLayer.getAccountById(accountId);
-
             Transaction transaction = new Transaction();
             transaction.setDate(LocalDate.now());
             transaction.setFromAccountId(bankAccountId);
             transaction.setToAccountId(accountId);
             transaction.setAmount(transactionAmount);
             transactionServiceLayer.addTransaction(transaction);
-
-            BigDecimal fromAccountBalance = bankAccount.getBalance();
-            BigDecimal toAccountBalance = account.getBalance();
-            if (account.getType().equalsIgnoreCase("account")) {
-                bankAccount.setBalance(fromAccountBalance.subtract(transactionAmount));
-                account.setBalance(toAccountBalance.add(transactionAmount));
-            }
-            else if (account.getType().equalsIgnoreCase("credit card")) {
-                bankAccount.setBalance(fromAccountBalance.subtract(transactionAmount));
-                account.setBalance(toAccountBalance.subtract(transactionAmount));
-            }
-            else {
-                throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
-            }
-            accountServiceLayer.updateAccount(bankAccount);
-            accountServiceLayer.updateAccount(account);
 
             attributes.addAttribute("status", "success");
         }

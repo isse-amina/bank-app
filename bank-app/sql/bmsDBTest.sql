@@ -5,14 +5,16 @@ USE bmsDBTest;
 CREATE TABLE Users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
     user_first_name VARCHAR(50) NOT NULL,
-    user_last_name VARCHAR(50) NOT NULL
+    user_last_name VARCHAR(50) NOT NULL,
+    user_email VARCHAR(50) NOT NULL UNIQUE,
+    user_password VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Accounts (
 	account_id INT PRIMARY KEY AUTO_INCREMENT,
     account_name VARCHAR(50) NOT NULL,
     account_type VARCHAR(50) NOT NULL,
-    account_number VARCHAR(50) NOT NULL UNIQUE,
+    account_number VARCHAR(50) NOT NULL,
 	account_balance DECIMAL(12,2) NOT NULL,
     account_owner INT NOT NULL,
 

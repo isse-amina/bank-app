@@ -2,7 +2,9 @@ package com.app.bank.service;
 
 import com.app.bank.dao.AccountDao;
 import com.app.bank.dao.TransactionDao;
+import com.app.bank.dto.Account;
 import com.app.bank.dto.Transaction;
+import com.app.bank.exceptions.AccountException;
 import com.app.bank.exceptions.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,20 +37,74 @@ public class TransactionServiceLayerImpl implements TransactionServiceLayer {
     }
 
     @Override
-    public Transaction addTransaction(Transaction transaction) throws TransactionException {
+    public Transaction addTransaction(Transaction transaction) throws TransactionException, AccountException {
         validateTransactionProperties(transaction);
+
+        BigDecimal transactionAmount = transaction.getAmount();
+
+        int bankAccountId = transaction.getFromAccountId();
+        int accountId = transaction.getToAccountId();
+
+        Account bankAccount = accountDao.getAccountById(bankAccountId);
+        Account account = accountDao.getAccountById(accountId);
+
+        BigDecimal fromAccountBalance = bankAccount.getBalance();
+        BigDecimal toAccountBalance = account.getBalance();
+
+        bankAccount.setBalance(fromAccountBalance.subtract(transactionAmount));
+        if (account.getType().equalsIgnoreCase("account")) {
+            account.setBalance(toAccountBalance.add(transactionAmount));
+        }
+        else if (account.getType().equalsIgnoreCase("credit card")) {
+            account.setBalance(toAccountBalance.subtract(transactionAmount));
+        }
+        else {
+            throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
+        }
+
+        accountDao.updateAccount(bankAccount);
+        accountDao.updateAccount(account);
+
         return transactionDao.addTransaction(transaction);
     }
 
     @Override
-    public void updateTransaction(Transaction transaction) throws TransactionException {
-        validateTransactionProperties(transaction);
-        transactionDao.updateTransaction(transaction);
+    public void updateTransaction(Transaction transaction) throws TransactionException, AccountException {
+        deleteTransactionById(transaction.getId());
+        addTransaction(transaction);
     }
 
     @Override
-    public void deleteTransactionById(int id) throws TransactionException {
+    public void deleteTransactionById(int id) throws TransactionException, AccountException {
         validateTransactionExists(id);
+
+        Transaction transaction = transactionDao.getTransactionById(id);
+
+        BigDecimal transactionAmount = transaction.getAmount();
+
+        int bankAccountId = transaction.getFromAccountId();
+        int accountId = transaction.getToAccountId();
+
+        Account bankAccount = accountDao.getAccountById(bankAccountId);
+        Account account = accountDao.getAccountById(accountId);
+
+        BigDecimal fromAccountBalance = bankAccount.getBalance();
+        BigDecimal toAccountBalance = account.getBalance();
+
+        bankAccount.setBalance(fromAccountBalance.add(transactionAmount));
+        if (account.getType().equalsIgnoreCase("account")) {
+            account.setBalance(toAccountBalance.subtract(transactionAmount));
+        }
+        else if (account.getType().equalsIgnoreCase("credit card")) {
+            account.setBalance(toAccountBalance.add(transactionAmount));
+        }
+        else {
+            throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
+        }
+
+        accountDao.updateAccount(bankAccount);
+        accountDao.updateAccount(account);
+
         transactionDao.deleteTransactionById(id);
     }
 
@@ -61,6 +117,9 @@ public class TransactionServiceLayerImpl implements TransactionServiceLayer {
         }
         if (fromAccountId == toAccountId) {
             throw new TransactionException("Funds cannot be transferred to the same account.");
+        }
+        if (accountDao.getAccountById(fromAccountId).getType().equalsIgnoreCase("credit card")) {
+            throw new TransactionException("Funds cannot be transferred from a credit card.");
         }
         LocalDate transactionDate = transaction.getDate();
         if (transactionDate == null) {

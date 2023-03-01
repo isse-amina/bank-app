@@ -57,6 +57,9 @@ public class AccountServiceLayerImpl implements AccountServiceLayer {
         if (userDao.getUserById(accountOwnerId) == null) {
             throw new AccountException("User does not exist: A user must be created before an account can be opened.");
         }
+        if (userDao.getUserById(accountOwnerId).getRole().equalsIgnoreCase("admin")) {
+            throw new AccountException("Account owner cannot be an admin.");
+        }
         String accountName = account.getName();
         if (accountName == null || accountName.isBlank()) {
             throw new AccountException("Account name cannot be empty.");

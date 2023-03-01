@@ -51,7 +51,7 @@ public class AccountServiceLayerImplTest {
         user.setLastName("Einstein");
         user.setEmail("ae@gmail.com");
         user.setPassword("temp");
-        user.setRole("user");
+        user.setRole("admin");
         try {
             user = userServiceLayer.addUser(user);
         }
@@ -63,62 +63,73 @@ public class AccountServiceLayerImplTest {
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("User does not exist: A user must be created before an account can be opened."));
 
-        // test 2: account name is null
+        // test 2: account owner is an admin
         account.setAccountOwnerId(user.getId());
+        exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
+        assertTrue(exception.getMessage().equals("Account owner cannot be an admin."));
+
+        // test 3: account name is null
+        user.setRole("user");
+        try {
+            userServiceLayer.updateUser(user);
+        }
+        catch (UserException e) {
+            fail("UserException should not be thrown.");
+        }
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account name cannot be empty."));
 
-        // test 3: account name is blank
+        // test 4: account name is blank
         account.setName("");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account name cannot be empty."));
 
-        // test 3: account type is null
+        // test 5: account type is null
         account.setName("Chequing");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account type cannot be empty."));
 
-        // test 4: account type is blank
+        // test 6: account type is blank
         account.setType("");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account type cannot be empty."));
 
-        // test 5: account type is neither account nor credit card
+        // test 7: account type is neither account nor credit card
         account.setType("Testing");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account type must be 'Account' or 'Credit Card'."));
 
-        // test 6: account number is null
+        // test 8: account number is null
         account.setType("Account");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number cannot be empty."));
 
-        // test 7: account number is blank
+        // test 9: account number is blank
         account.setNumber("");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number cannot be empty."));
 
-        // test 8: account number does not only contain numerical values
+        // test 10: account number does not only contain numerical values
         account.setNumber("A234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number must only contain numerical values."));
 
-        // test 9: account number is negative
+        // test 11: account number is negative
         account.setNumber("-234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account number must only contain numerical values."));
 
-        // test 10: bank account number does not consist of 7 digits
+        // test 12: bank account number does not consist of 7 digits
         account.setNumber("123456");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Bank account number must consist of 7 digits."));
 
-        // test 11: account balance is null
+        // test 13: account balance is null
         account.setNumber("1234567");
         exception = assertThrows(AccountException.class, () -> accountServiceLayer.validateAccountProperties(account));
         assertTrue(exception.getMessage().equals("Account balance cannot be null."));
 
-        // test 12: account properties validated
+        // test 14: account properties validated
         account.setBalance(new BigDecimal("100.00"));
         assertDoesNotThrow(() -> accountServiceLayer.validateAccountProperties(account));
         try {

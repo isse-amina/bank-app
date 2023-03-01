@@ -37,15 +37,29 @@ INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, us
 VALUES("Albert", "Einstein", "ae@gmail.com", "temp", "user");
 INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role)
 VALUES("Isaac", "Newton", "in@gmail.com", "temp", "user");
+INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role)
+VALUES("Galileo", "Galilei", "gg@gmail.com", "temp", "admin");
 INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
 VALUES("Chequing", "Account", "1234567", "1000.00", 1);
 INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
 VALUES("Saving", "Account", "2345678", "2000.00", 1);
 INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
 VALUES("Cash Back", "Credit Card", "345678901234", "300.00", 1);
-INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount) 
+INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
+VALUES("Chequing", "Account", "7654321", "1000.00", 2);
+INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
+VALUES("Saving", "Account", "8765432", "2000.00", 2);
+INSERT INTO Accounts(account_name, account_type, account_number, account_balance, account_owner)
+VALUES("Cash Back", "Credit Card", "432109876543", "300.00", 2);
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
 VALUES("2001-01-01", 1, 2, 10.00);
-INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount) 
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
 VALUES("2002-02-02", 2, 1, 20.00);
-INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount) 
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
 VALUES("2003-03-03", 1, 3, 30.00);
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
+VALUES("2011-01-11", 4, 5, 100.00);
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
+VALUES("2012-02-12", 5, 4, 200.00);
+INSERT INTO Transactions(transaction_date, from_account, to_account, transaction_amount)
+VALUES("2013-03-13", 5, 6, 300.00);

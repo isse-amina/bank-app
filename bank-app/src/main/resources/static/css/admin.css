@@ -45,6 +45,13 @@
     padding: 10px 0;
     border-bottom: 1px solid #E8E8E8;
 }
+.view-table img {
+    height: 35px;
+    margin-right: 5px;
+}
+.view-table img:hover {
+    cursor: pointer;
+}
 .view-table.users .table-row {
     grid-template-columns: 10% 20% 25% 10% 10% 15%;
     grid-gap: 2%;

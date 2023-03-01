@@ -84,3 +84,54 @@
     height: 20px;
     margin-right: 10px;
 }
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none;
+}
+.are-you-sure {
+    background-color: white;
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    width: 50%;
+    margin: auto;
+    padding: 40px 20px;
+    z-index: 2;
+    display: none;
+}
+.are-you-sure h4 {
+    text-align: center;
+}
+.are-you-sure div {
+    text-align: right;
+}
+.deletion-buttons a {
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.deletion-buttons a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.deletion-buttons a:nth-child(1) {
+    color: white !important;
+    background-color: #01C07A;
+    border: 1px solid #01C07A;
+}
+.deletion-buttons a:nth-child(1):hover {
+    background-color: #01C07A;
+    border: 1px solid #01C07A;
+}
+.deletion-buttons a:nth-child(2) {
+    color: #01C07A !important;
+    background-color: transparent;
+    border: none;
+}

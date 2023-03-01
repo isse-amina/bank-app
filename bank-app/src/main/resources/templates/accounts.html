@@ -11,96 +11,110 @@
     <title>International Bank</title>
 </head>
 <body class="admin">
-<nav class="navbar">
-    <div class="navbar-container">
-        <div>
-            <a href="admin"><img class="bank-logo" src="images/logo.png"></a>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div>
+                <a href="admin"><img class="bank-logo" src="images/logo.png"></a>
+            </div>
+            <div class="navbar-links">
+                <a href="users"><img src="images/admin-users.png"></a>
+                <a href="accounts"><img src="images/admin-accounts.png"></a>
+                <a href="transactions"><img src="images/admin-transactions.png"></a>
+                <a><button class="sign-out">Sign out</button></a>
+            </div>
         </div>
-        <div class="navbar-links">
-            <a href="users"><img src="images/admin-users.png"></a>
-            <a href="accounts"><img src="images/admin-accounts.png"></a>
-            <a href="transactions"><img src="images/admin-transactions.png"></a>
-            <a><button class="sign-out">Sign out</button></a>
+    </nav>
+    <div class="main-container">
+        <div class="add-container">
+            <span>
+                <h4>Add New Account</h4>
+                <p>A new account must have a name, type, number, balance and owner.</p>
+            </span>
+            <span>
+                <img src="images/admin-add.png">
+            </span>
         </div>
-    </div>
-</nav>
-<div class="main-container">
-    <div class="add-container">
-        <span>
-            <h4>Add New Account</h4>
-            <p>A new account must have a name, type, number, balance and owner.</p>
-        </span>
-        <span>
-            <img src="images/admin-add.png">
-        </span>
-    </div>
-    <div class="view-container">
-        <h4>All Accounts</h4>
-        <p>View the list of accounts currently in the database.</p>
-        <div class="view-table accounts">
-            <div th:each="user : ${users}" th:if="${user.role == 'user'}">
-                <h6 class="table-details">
-                    <span>
-                        <img src="images/admin-arrow.png">
-                    </span>
-                    <span th:text="'User: ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.email} + ')'">
-                        User details
-                    </span>
-                </h6>
-                <div class="table-row table-header">
-                    <span>
-                        Acc. Id
-                    </span>
-                    <span>
-                        Type
-                    </span>
-                    <span>
-                        Number
-                    </span>
-                    <span>
-                        Balance
-                    </span>
-                    <span>
-                        More Actions
-                    </span>
-                </div>
-                <div th:each="account : ${accounts}" th:if="${account.accountOwner.email == user.email}" class="table-row">
-                    <span th:text="${account.id}">
-                        Acc. Id
-                    </span>
-                    <span th:text="${account.name + ' ' + account.type}">
-                        Type
-                    </span>
-                    <span th:text="${account.number}">
-                        Number
-                    </span>
-                    <span th:if="${account.balance >= 0}" th:text="'$' + ${account.balance}">
-                        "Positive" Account Balance
-                    </span>
-                    <span th:if="${account.balance < 0}" th:text="'($' + ${account.balance * -1} + ')'">
-                        "Negative" Account Balance
-                    </span>
-                    <span>
-                        <img src="images/admin-edit.png">
-                        <img src="images/admin-delete.png">
-                    </span>
+        <div class="view-container">
+            <h4>All Accounts</h4>
+            <p>View the list of accounts currently in the database.</p>
+            <div class="view-table accounts">
+                <div th:each="user : ${users}" th:if="${user.role == 'user'}">
+                    <h6 class="table-details">
+                        <span>
+                            <img src="images/admin-arrow.png">
+                        </span>
+                        <span th:text="'User: ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.email} + ')'">
+                            User details
+                        </span>
+                    </h6>
+                    <div class="table-row table-header">
+                        <span>
+                            Acc. Id
+                        </span>
+                        <span>
+                            Type
+                        </span>
+                        <span>
+                            Number
+                        </span>
+                        <span>
+                            Balance
+                        </span>
+                        <span>
+                            More Actions
+                        </span>
+                    </div>
+                    <div th:each="account : ${accounts}" th:if="${account.accountOwner.email == user.email}" class="table-row">
+                        <span th:text="${account.id}">
+                            Acc. Id
+                        </span>
+                        <span th:text="${account.name + ' ' + account.type}">
+                            Type
+                        </span>
+                        <span th:text="${account.number}">
+                            Number
+                        </span>
+                        <span th:if="${account.balance >= 0}" th:text="'$' + ${account.balance}">
+                            "Positive" Account Balance
+                        </span>
+                        <span th:if="${account.balance < 0}" th:text="'($' + ${account.balance * -1} + ')'">
+                            "Negative" Account Balance
+                        </span>
+                        <span>
+                            <img src="images/admin-edit.png">
+                            <img class="admin-delete" src="images/admin-delete.png">
+                        </span>
+                        <div class="are-you-sure">
+                            <h4>Delete permanently</h4>
+                            <p>
+                                This account will be permanently from the database.
+                                All transactions associated with this account will also be deleted.
+                                This cannot be undone.
+                            </p>
+                            <div class="deletion-buttons">
+                                <a th:href="@{/deleteAccount(id=${account.id})}" href="#" class="process-deletion">Delete</a>
+                                <a class="cancel-deletion">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<footer class="footer">
-    <div class="footer-container">
-        <div>
-            <a href="users">Users<img src="images/visit.png"></a>
-            <a href="accounts">Accounts<img src="images/visit.png"></a>
-            <a href="transactions">Transactions<img src="images/visit.png"></a>
+    <div class="overlay"></div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <a href="users">Users<img src="images/visit.png"></a>
+                <a href="accounts">Accounts<img src="images/visit.png"></a>
+                <a href="transactions">Transactions<img src="images/visit.png"></a>
+            </div>
+            <div>
+                <img class="secure-logo" src="images/secure.png">
+            </div>
         </div>
-        <div>
-            <img class="secure-logo" src="images/secure.png">
-        </div>
-    </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </footer>
+    <script src="js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

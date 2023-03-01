@@ -11,92 +11,106 @@
     <title>International Bank</title>
 </head>
 <body class="admin">
-<nav class="navbar">
-    <div class="navbar-container">
-        <div>
-            <a href="admin"><img class="bank-logo" src="images/logo.png"></a>
-        </div>
-        <div class="navbar-links">
-            <a href="users"><img src="images/admin-users.png"></a>
-            <a href="accounts"><img src="images/admin-accounts.png"></a>
-            <a href="transactions"><img src="images/admin-transactions.png"></a>
-            <a><button class="sign-out">Sign out</button></a>
-        </div>
-    </div>
-</nav>
-<div class="main-container">
-    <div class="add-container">
-        <span>
-            <h4>Add New User</h4>
-            <p>A new user must have a first name, last name, email, password and role.</p>
-        </span>
-        <span>
-            <img src="images/admin-add.png">
-        </span>
-    </div>
-    <div class="view-container">
-        <h4>All Users</h4>
-        <p>View the list of users currently in the database.</p>
-        <div class="view-table users">
-            <div class="table-row table-header">
-                <span>
-                    User Id
-                </span>
-                <span>
-                    Name
-                </span>
-                <span>
-                    Email
-                </span>
-                <span>
-                    Role
-                </span>
-                <span>
-                    Accounts
-                </span>
-                <span>
-                    More Actions
-                </span>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div>
+                <a href="admin"><img class="bank-logo" src="images/logo.png"></a>
             </div>
-            <div th:each="user : ${users}" class="table-row">
-                <span th:text="${user.id}">
-                    User Id
-                </span>
-                <span th:text="${user.firstName}  + ' ' + ${user.lastName}">
-                    Name
-                </span>
-                <span th:text="${user.email}">
-                    Email
-                </span>
-                <span th:text="${user.role}">
-                    Role
-                </span>
-                <span th:if="${user.role == 'user'}">
-                    <a href="#">View</a>
-                </span>
-                <span th:if="${user.role == 'admin'}">
+            <div class="navbar-links">
+                <a href="users"><img src="images/admin-users.png"></a>
+                <a href="accounts"><img src="images/admin-accounts.png"></a>
+                <a href="transactions"><img src="images/admin-transactions.png"></a>
+                <a><button class="sign-out">Sign out</button></a>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="add-container">
+            <span>
+                <h4>Add New User</h4>
+                <p>A new user must have a first name, last name, email, password and role.</p>
+            </span>
+            <span>
+                <img src="images/admin-add.png">
+            </span>
+        </div>
+        <div class="view-container">
+            <h4>All Users</h4>
+            <p>View the list of users currently in the database.</p>
+            <div class="view-table users">
+                <div class="table-row table-header">
+                    <span>
+                        User Id
+                    </span>
+                    <span>
+                        Name
+                    </span>
+                    <span>
+                        Email
+                    </span>
+                    <span>
+                        Role
+                    </span>
+                    <span>
+                        Accounts
+                    </span>
+                    <span>
+                        More Actions
+                    </span>
+                </div>
+                <div th:each="user : ${users}" class="table-row">
+                    <span th:text="${user.id}">
+                        User Id
+                    </span>
+                    <span th:text="${user.firstName}  + ' ' + ${user.lastName}">
+                        Name
+                    </span>
+                    <span th:text="${user.email}">
+                        Email
+                    </span>
+                    <span th:text="${user.role}">
+                        Role
+                    </span>
+                    <span th:if="${user.role == 'user'}">
+                        <a href="#">View</a>
+                    </span>
+                    <span th:if="${user.role == 'admin'}">
 
-                </span>
-                <span>
-                    <img src="images/admin-edit.png">
-                    <img src="images/admin-delete.png">
-                </span>
+                    </span>
+                    <span>
+                        <img src="images/admin-edit.png">
+                        <img class="admin-delete" src="images/admin-delete.png">
+                    </span>
+                    <div class="are-you-sure">
+                        <h4>Delete permanently</h4>
+                        <p>
+                            This user will be permanently from the database.
+                            All accounts and transactions associated with this user will also be deleted.
+                            This cannot be undone.
+                        </p>
+                        <div class="deletion-buttons">
+                            <a th:href="@{/deleteUser(id=${user.id})}" href="#" class="process-deletion">Delete</a>
+                            <a class="cancel-deletion">Cancel</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<footer class="footer">
-    <div class="footer-container">
-        <div>
-            <a href="users">Users<img src="images/visit.png"></a>
-            <a href="accounts">Accounts<img src="images/visit.png"></a>
-            <a href="transactions">Transactions<img src="images/visit.png"></a>
+    <div class="overlay"></div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <a href="users">Users<img src="images/visit.png"></a>
+                <a href="accounts">Accounts<img src="images/visit.png"></a>
+                <a href="transactions">Transactions<img src="images/visit.png"></a>
+            </div>
+            <div>
+                <img class="secure-logo" src="images/secure.png">
+            </div>
         </div>
-        <div>
-            <img class="secure-logo" src="images/secure.png">
-        </div>
-    </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </footer>
+    <script src="js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -4,6 +4,8 @@ import com.app.bank.dto.Account;
 import com.app.bank.dto.Transaction;
 import com.app.bank.dto.User;
 import com.app.bank.exceptions.AccountException;
+import com.app.bank.exceptions.TransactionException;
+import com.app.bank.exceptions.UserException;
 import com.app.bank.service.AccountServiceLayer;
 import com.app.bank.service.TransactionServiceLayer;
 import com.app.bank.service.UserServiceLayer;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -76,5 +79,29 @@ public class AdminController {
         model.addAttribute("transactions", transactions);
 
         return "transactions";
+    }
+
+    @GetMapping("deleteUser")
+    public String deleteUser(HttpServletRequest request) throws UserException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        userServiceLayer.deleteUserById(id);
+
+        return "redirect:/users";
+    }
+
+    @GetMapping("deleteAccount")
+    public String deleteAccount(HttpServletRequest request) throws AccountException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        accountServiceLayer.deleteAccountById(id);
+
+        return "redirect:/accounts";
+    }
+
+    @GetMapping("deleteTransaction")
+    public String deleteTransaction(HttpServletRequest request) throws TransactionException, AccountException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        transactionServiceLayer.deleteTransactionById(id);
+
+        return "redirect:/transactions";
     }
 }

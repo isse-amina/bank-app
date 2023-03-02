@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -103,5 +105,119 @@ public class AdminController {
         transactionServiceLayer.deleteTransactionById(id);
 
         return "redirect:/transactions";
+    }
+
+    @GetMapping("add-user")
+    public String getAddUser(HttpServletRequest request, Model model) {
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "add-user";
+    }
+
+    @PostMapping("addUser")
+    public String addUser(HttpServletRequest request, RedirectAttributes attributes) {
+        try {
+            String firstName = request.getParameter("first-name");
+            String lastName = request.getParameter("last-name");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String role = request.getParameter("role");
+
+            User user = new User();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setRole(role);
+            userServiceLayer.addUser(user);
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        return "redirect:/add-user";
+    }
+
+    @GetMapping("edit-user")
+    public String getEditUser(HttpServletRequest request, Model model) throws UserException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userServiceLayer.getUserById(id);
+
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "edit-user";
+    }
+
+    @PostMapping("editUser")
+    public String editUser(HttpServletRequest request, RedirectAttributes attributes) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int newId = -1;
+        try {
+            String firstName = request.getParameter("first-name");
+            String lastName = request.getParameter("last-name");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String role = request.getParameter("role");
+
+            User user = new User();
+            user.setId(id);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setRole(role);
+
+            String initialRole = userServiceLayer.getUserById(id).getRole();
+            String updatedRole = role;
+
+            if (initialRole.equalsIgnoreCase("user") && updatedRole.equalsIgnoreCase("admin")) {
+                userServiceLayer.deleteUserById(id);
+                newId = userServiceLayer.addUser(user).getId();
+            }
+            else {
+                userServiceLayer.updateUser(user);
+            }
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        if (newId == -1) {
+            attributes.addAttribute("id", id);
+        }
+        else {
+            attributes.addAttribute("id", newId);
+        }
+
+        return "redirect:/edit-user";
     }
 }

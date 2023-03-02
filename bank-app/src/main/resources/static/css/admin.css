@@ -17,7 +17,9 @@
     border: 1px solid #018454; 
 }
 .add-container,
-.view-container {
+.view-container,
+.add-form,
+.edit-form {
     background-color: white;
     -moz-box-shadow: 0 0 5px #D0D0D0;
     -webkit-box-shadow: 0 0 5px #D0D0D0;
@@ -52,8 +54,11 @@
 .view-table img:hover {
     cursor: pointer;
 }
+.admin .view-table .edit-button:hover {
+    text-decoration: none !important;
+}
 .view-table.users .table-row {
-    grid-template-columns: 10% 20% 25% 10% 10% 15%;
+    grid-template-columns: 10% 20% 30% 15% 15%;
     grid-gap: 2%;
 }
 .view-table.accounts .table-row {
@@ -112,26 +117,65 @@
 .are-you-sure div {
     text-align: right;
 }
-.deletion-buttons a {
+.admin-buttons a,
+.admin-buttons button {
     padding: 7.5px 15px;
     border-radius: 10px;
     font-weight: bold;
 }
-.deletion-buttons a:hover {
+.admin-buttons a:hover,
+.admin-buttons button:hover {
     text-decoration: underline;
     cursor: pointer;
 }
-.deletion-buttons a:nth-child(1) {
+.admin-buttons a:nth-child(1),
+.admin-buttons button:nth-child(1) {
     color: white !important;
     background-color: #01C07A;
     border: 1px solid #01C07A;
 }
-.deletion-buttons a:nth-child(1):hover {
+.admin-buttons a:nth-child(1):hover,
+.admin-buttons button:nth-child(1):hover {
     background-color: #01C07A;
     border: 1px solid #01C07A;
 }
-.deletion-buttons a:nth-child(2) {
+.admin-buttons a:nth-child(2),
+.admin-buttons button:nth-child(2) {
     color: #01C07A !important;
     background-color: transparent;
     border: none;
+}
+.admin .add-form,
+.admin .edit-form {
+    margin-top: 40px;
+}
+.admin .form-container {
+    display: grid;
+    grid-template-columns: 15% 80%;
+    grid-row-gap: 40px;
+    grid-column-gap: 5%;
+}
+.admin .form-container input,
+.admin .form-container select {
+    height: 30px;
+}
+.admin .add-form .admin-buttons,
+.admin .edit-form .admin-buttons {
+    margin-top: 40px;
+    text-align: right;
+}
+.admin .warning-message {
+    display: grid;
+    grid-template-columns: 7.5% 85%;
+    grid-gap: 2.5%;
+    align-items: center;
+    padding: 40px 40px;
+    border: 1px solid #CDB20C;
+    margin-top: 40px;
+}
+.admin .warning-message img {
+    height: 50px;
+}
+.admin .warning-message p {
+    margin-bottom: 0;
 }

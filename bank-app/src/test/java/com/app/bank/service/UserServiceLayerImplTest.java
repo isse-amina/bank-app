@@ -34,65 +34,82 @@ public class UserServiceLayerImplTest {
         Exception exception;
 
         // test 1: user first name is null
-        User user = new User();
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        User user1 = new User();
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's first name cannot be empty."));
 
         // test 2: user first name is blank
-        user.setFirstName("");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setFirstName("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's first name cannot be empty."));
 
         // test 3: user last name is null
-        user.setFirstName("Albert");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setFirstName("Albert");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's last name cannot be empty."));
 
         // test 4: user last name is blank
-        user.setLastName("");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setLastName("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's last name cannot be empty."));
 
         // test 5: user email is null
-        user.setLastName("Einstein");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setLastName("Einstein");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's email cannot be empty."));
 
         // test 6: user email is blank
-        user.setEmail("");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setEmail("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's email cannot be empty."));
 
         // test 7: user password is null
-        user.setEmail("ae@gmail.com");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setEmail("in@gmail.com");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's password cannot be empty."));
 
         // test 8: user password is blank
-        user.setPassword("");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setPassword("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's password cannot be empty."));
 
         // test 9: user role is null
-        user.setPassword("temp");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setPassword("temp");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's role cannot be empty."));
 
         // test 10: user role is blank
-        user.setRole("");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setRole("");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's role cannot be empty."));
 
         // test 11: user role is neither user nor admin
-        user.setRole("testing");
-        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user));
+        user1.setRole("testing");
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
         assertTrue(exception.getMessage().equals("User's role must be 'User' or 'Admin'."));
 
-        // test 12: user properties validated
-        user.setRole("user");
-        assertDoesNotThrow(() -> userServiceLayer.validateUserProperties(user));
+        // test 12: email is already in use
+        user1.setRole("user");
+        User user2 = new User();
+        user2.setFirstName("Isaac");
+        user2.setLastName("Newton");
+        user2.setEmail("in@gmail.com");
+        user2.setPassword("temp");
+        user2.setRole("user");
         try {
-            userServiceLayer.addUser(user);
+            userServiceLayer.addUser(user2);
+        }
+        catch (UserException e) {
+            fail("UserException should not be thrown.");
+        }
+        exception = assertThrows(UserException.class, () -> userServiceLayer.validateUserProperties(user1));
+        assertTrue(exception.getMessage().equals("Email is already in use."));
+
+        // test 12: user properties validated
+        user1.setEmail("ae@gmail.com");
+        assertDoesNotThrow(() -> userServiceLayer.validateUserProperties(user1));
+        try {
+            userServiceLayer.addUser(user1);
         }
         catch (UserException e) {
             fail("UserException should not be thrown.");

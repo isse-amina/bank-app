@@ -147,7 +147,7 @@ public class AppController {
         }
         catch (AccountException e) {
             String errorMessage = e.getMessage();
-            attributes.addAttribute("error", errorMessage);
+            attributes.addAttribute("status", "failed");
             attributes.addAttribute("error", errorMessage);
         }
         catch (TransactionException e) {

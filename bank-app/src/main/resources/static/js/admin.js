@@ -13,3 +13,9 @@ cancelDeletion.forEach((item, index) => {
         item.parentNode.parentNode.style.display = "none";
     })
 })
+const cancelAdd = document.querySelector(".cancel-add");
+if (cancelAdd != null) {
+    cancelAdd.onclick = function() {
+        location.href = "/users";
+    }
+}

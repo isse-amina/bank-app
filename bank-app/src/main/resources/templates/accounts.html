@@ -38,7 +38,8 @@
             <h4>All Accounts</h4>
             <p>View the list of accounts currently in the database.</p>
             <div class="view-table accounts">
-                <div th:each="user : ${users}" th:if="${user.role == 'user'}">
+                <div th:each="user : ${users}"
+                     th:if="${user.role == 'user'}">
                     <h6 class="table-details">
                         <span>
                             <img src="images/admin-arrow.png">
@@ -64,7 +65,7 @@
                             More Actions
                         </span>
                     </div>
-                    <div th:each="account : ${accounts}" th:if="${account.accountOwner.email == user.email}" class="table-row">
+                    <div th:each="account : ${accounts}" th:if="${account.accountOwner.id == user.id}" class="table-row">
                         <span th:text="${account.id}">
                             Acc. Id
                         </span>
@@ -91,7 +92,7 @@
                                 All transactions associated with this account will also be deleted.
                                 This cannot be undone.
                             </p>
-                            <div class="deletion-buttons">
+                            <div class="admin-buttons">
                                 <a th:href="@{/deleteAccount(id=${account.id})}" href="#" class="process-deletion">Delete</a>
                                 <a class="cancel-deletion">Cancel</a>
                             </div>

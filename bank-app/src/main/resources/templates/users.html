@@ -31,7 +31,9 @@
                 <p>A new user must have a first name, last name, email, password and role.</p>
             </span>
             <span>
-                <img src="images/admin-add.png">
+                <a href="add-user">
+                    <img src="images/admin-add.png">
+                </a>
             </span>
         </div>
         <div class="view-container">
@@ -52,9 +54,6 @@
                         Role
                     </span>
                     <span>
-                        Accounts
-                    </span>
-                    <span>
                         More Actions
                     </span>
                 </div>
@@ -71,14 +70,10 @@
                     <span th:text="${user.role}">
                         Role
                     </span>
-                    <span th:if="${user.role == 'user'}">
-                        <a href="#">View</a>
-                    </span>
-                    <span th:if="${user.role == 'admin'}">
-
-                    </span>
                     <span>
-                        <img src="images/admin-edit.png">
+                        <a class="edit-button" th:href="@{/edit-user(id=${user.id})}" href="#" >
+                            <img src="images/admin-edit.png">
+                        </a>
                         <img class="admin-delete" src="images/admin-delete.png">
                     </span>
                     <div class="are-you-sure">
@@ -88,7 +83,7 @@
                             All accounts and transactions associated with this user will also be deleted.
                             This cannot be undone.
                         </p>
-                        <div class="deletion-buttons">
+                        <div class="admin-buttons">
                             <a th:href="@{/deleteUser(id=${user.id})}" href="#" class="process-deletion">Delete</a>
                             <a class="cancel-deletion">Cancel</a>
                         </div>

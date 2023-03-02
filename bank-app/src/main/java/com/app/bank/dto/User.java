@@ -51,7 +51,12 @@ public class User {
     }
 
     public String getRole() {
-        return role.toLowerCase();
+        if (role != null) {
+            return role.toLowerCase();
+        }
+        else {
+            return null;
+        }
     }
 
     public void setRole(String role) {

@@ -62,6 +62,10 @@ public class UserServiceLayerImpl implements UserServiceLayer {
         if (!user.getRole().equalsIgnoreCase("user") && !user.getRole().equalsIgnoreCase("admin")) {
             throw new UserException("User's role must be 'User' or 'Admin'.");
         }
+        String userEmail = user.getEmail();
+        if (userDao.getUserByEmail(userEmail) != null && user.getId() != userDao.getUserByEmail(userEmail).getId()) {
+            throw new UserException("Email is already in use.");
+        }
     }
 
     @Override

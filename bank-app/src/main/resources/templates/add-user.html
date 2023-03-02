@@ -25,14 +25,40 @@
         </div>
     </nav>
     <div class="main-container">
-        <p>
-            Welcome to the Admin page of the International Bank!
-        </p>
+        <h3 class="header">Add New User</h3>
+        <div th:if="${status == 'success'}" class="success-container">
+            <p class="success-message">The user has been added successfully.</p>
+        </div>
+        <div th:if="${error != 'none'}" class="error-container">
+            <p th:text="${error}" class="error-message">An error has occurred.</p>
+        </div>
+        <form class="add-form" novalidate action="addUser" method="POST">
+            <div class="form-container">
+                <label>First Name: </label>
+                <input name="first-name" type="text" required/>
+                <label>Last Name: </label>
+                <input name="last-name" type="text" required/>
+                <label>Email: </label>
+                <input name="email" type="text" required/>
+                <label>Password: </label>
+                <input name="password" type="text" required/>
+                <label>Role: </label>
+                <select name="role">
+                    <option value="" disabled selected></option>
+                    <option>Admin</option>
+                    <option>User</option>
+                </select>
+            </div>
+            <div class="admin-buttons">
+                <button class="submit-add" type="submit">Submit</button>
+                <button class="cancel-add" type="button">Cancel</button>
+            </div>
+        </form>
     </div>
     <footer class="footer">
         <div class="footer-container">
             <div>
-                <a href="users.html">Users<img src="images/visit.png"></a>
+                <a href="users">Users<img src="images/visit.png"></a>
                 <a href="accounts">Accounts<img src="images/visit.png"></a>
                 <a href="transactions">Transactions<img src="images/visit.png"></a>
             </div>
@@ -41,6 +67,7 @@
             </div>
         </div>
     </footer>
+    <script src="js/admin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

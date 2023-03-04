@@ -31,7 +31,9 @@
                 <p>A new transaction must have a date, source, destination and amount.</p>
             </span>
             <span>
-                <img src="images/admin-add.png">
+                <a href="add-transaction">
+                    <img src="images/admin-add.png">
+                </a>
             </span>
         </div>
         <div class="view-container">
@@ -86,7 +88,9 @@
                             Amount
                         </span>
                         <span>
-                            <img src="images/admin-edit.png">
+                            <a class="edit-button" th:href="@{/edit-transaction(id=${transaction.id})}" href="#" >
+                                <img src="images/admin-edit.png">
+                            </a>
                             <img class="admin-delete" src="images/admin-delete.png">
                         </span>
                         <div class="are-you-sure">

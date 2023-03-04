@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -69,9 +70,9 @@ public class TransactionServiceLayerImpl implements TransactionServiceLayer {
     }
 
     @Override
-    public void updateTransaction(Transaction transaction) throws TransactionException, AccountException {
+    public Transaction updateTransaction(Transaction transaction) throws TransactionException, AccountException {
         deleteTransactionById(transaction.getId());
-        addTransaction(transaction);
+        return addTransaction(transaction);
     }
 
     @Override
@@ -121,12 +122,20 @@ public class TransactionServiceLayerImpl implements TransactionServiceLayer {
         if (accountDao.getAccountById(fromAccountId).getType().equalsIgnoreCase("credit card")) {
             throw new TransactionException("Funds cannot be transferred from a credit card.");
         }
-        LocalDate transactionDate = transaction.getDate();
-        if (transactionDate == null) {
-            throw new TransactionException("Transaction date cannot be null.");
+        if (accountDao.getAccountById(fromAccountId).getAccountOwner().getId() != accountDao.getAccountById(toAccountId).getAccountOwner().getId()) {
+            throw new TransactionException("Funds can only be transferred between accounts belonging to the same user.");
         }
-        if (transactionDate.isAfter(LocalDate.now())) {
-            throw new TransactionException("Transaction date cannot be in the future.");
+        try {
+            LocalDate transactionDate = transaction.getDate();
+            if (transactionDate == null) {
+                throw new TransactionException("Transaction date cannot be null.");
+            }
+            if (transactionDate.isAfter(LocalDate.now())) {
+                throw new TransactionException("Transaction date cannot be in the future.");
+            }
+        }
+        catch (DateTimeParseException e) {
+            throw new TransactionException("Date could not be parsed. Ensure that the date is in the appropriate format.");
         }
         BigDecimal transactionAmount = transaction.getAmount();
         if (transactionAmount == null) {
@@ -135,9 +144,14 @@ public class TransactionServiceLayerImpl implements TransactionServiceLayer {
         if (transactionAmount.compareTo(new BigDecimal("0.00")) != 1) {
             throw new TransactionException("Transaction amount must be greater than 0.");
         }
-        BigDecimal fromAccountBalance = accountDao.getAccountById(fromAccountId).getBalance();
-        if (fromAccountBalance.compareTo(transactionAmount) < 0) {
-            throw new TransactionException("Transaction failed: The account does not have enough funds to complete the transaction.");
+        try {
+            BigDecimal fromAccountBalance = accountDao.getAccountById(fromAccountId).getBalance();
+            if (fromAccountBalance.compareTo(transactionAmount) < 0) {
+                throw new TransactionException("Transaction failed: The account does not have enough funds to complete the transaction.");
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new TransactionException("Transaction amount must be a decimal number.");
         }
     }
 

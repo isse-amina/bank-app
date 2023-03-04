@@ -11,7 +11,7 @@ public interface TransactionServiceLayer {
     List<Transaction> getAllTransactions();
     List<Transaction> getTransactionsByAccountId(int accountId);
     Transaction addTransaction(Transaction transaction) throws TransactionException, AccountException;
-    void updateTransaction(Transaction transaction) throws TransactionException, AccountException;
+    Transaction updateTransaction(Transaction transaction) throws TransactionException, AccountException;
     void deleteTransactionById(int id) throws TransactionException, AccountException;
     void validateTransactionProperties(Transaction transaction) throws TransactionException;
     void validateTransactionExists(int id) throws TransactionException;

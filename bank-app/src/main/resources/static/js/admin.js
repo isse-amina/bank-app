@@ -13,9 +13,9 @@ cancelDeletion.forEach((item, index) => {
         item.parentNode.parentNode.style.display = "none";
     })
 })
-const cancelAdd = document.querySelector(".cancel-add");
-if (cancelAdd != null) {
-    cancelAdd.onclick = function() {
+const cancelAdd = document.querySelectorAll(".cancel-add");
+cancelAdd.forEach((item, index) => {
+    item.addEventListener("click", arrow => {
         var page = window.location.href;
         if (page.includes("user")) {
             location.href = "/users";
@@ -29,5 +29,5 @@ if (cancelAdd != null) {
         else {
             location.href = "/admin";
         }
-    }
-}
+    })
+})

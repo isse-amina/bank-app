@@ -187,3 +187,11 @@
 .admin .readonly:focus {
     outline: none;
 }
+.admin .email-container {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-row-gap: 20px;
+}
+.admin .email-container label {
+    font-weight: 600;
+}

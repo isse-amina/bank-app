@@ -18,7 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class AdminController {
@@ -203,12 +207,116 @@ public class AdminController {
             attributes.addAttribute("error", errorMessage);
         }
         catch (NumberFormatException e) {
-            String errorMessage = "Account balance cannot be null.";
+            String errorMessage = "Account balance must be a decimal number.";
             attributes.addAttribute("status", "failed");
             attributes.addAttribute("error", errorMessage);
         }
 
         return "redirect:/add-account";
+    }
+
+    @GetMapping("add-transaction")
+    public String getAddTransaction(HttpServletRequest request, Model model) {
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+        String userEmail = request.getParameter("user-email");
+        User user;
+        try {
+            user = userServiceLayer.getUserByEmail(userEmail);
+            List<Account> accounts = accountServiceLayer.getAccountsByUserId(user.getId());
+            model.addAttribute("accounts", accounts);
+        }
+        catch (UserException e) {
+            user = null;
+        }
+
+        model.addAttribute("user-email", userEmail);
+        model.addAttribute("user", user);
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "add-transaction";
+    }
+
+    @PostMapping("addUserToTransaction")
+    public String addUserToTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        try {
+            String userEmail = request.getParameter("user-email");
+            User user = userServiceLayer.getUserByEmail(userEmail);
+            if (user.getRole().equalsIgnoreCase("admin")) {
+                throw new UserException("Transaction cannot be performed by an admin.");
+            }
+
+            attributes.addAttribute("user-email", userEmail);
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        return "redirect:/add-transaction";
+    }
+
+    @PostMapping("addTransaction")
+    public String addTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        String userEmail = request.getParameter("user-email");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter = formatter.withLocale(Locale.US);
+        try {
+            LocalDate date = LocalDate.parse(request.getParameter("date"), formatter);
+            int fromAccountId = Integer.parseInt(request.getParameter("from-account-id"));
+            int toAccountId = Integer.parseInt(request.getParameter("to-account-id"));
+            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+
+            Transaction transaction = new Transaction();
+            transaction.setDate(date);
+            transaction.setFromAccountId(fromAccountId);
+            transaction.setToAccountId(toAccountId);
+            transaction.setAmount(amount);
+
+            transactionServiceLayer.addTransaction(transaction);
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (AccountException e) {
+            attributes.addAttribute("user-email", userEmail);
+
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (TransactionException e) {
+            attributes.addAttribute("user-email", userEmail);
+
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (DateTimeParseException e) {
+            attributes.addAttribute("user-email", userEmail);
+
+            String errorMessage = "Date could not be parsed. Ensure that the date is in the appropriate format.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+
+            System.out.println(userEmail);
+        }
+        catch (NumberFormatException e) {
+            attributes.addAttribute("user-email", userEmail);
+
+            String errorMessage = "Transaction amount must be a decimal number.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        return "redirect:/add-transaction";
     }
 
     @GetMapping("edit-user")
@@ -336,7 +444,7 @@ public class AdminController {
             attributes.addAttribute("error", errorMessage);
         }
         catch (NumberFormatException e) {
-            String errorMessage = "Account balance cannot be null.";
+            String errorMessage = "Account balance must be a decimal number.";
             attributes.addAttribute("status", "failed");
             attributes.addAttribute("error", errorMessage);
         }
@@ -344,5 +452,80 @@ public class AdminController {
         attributes.addAttribute("id", id);
 
         return "redirect:/edit-account";
+    }
+
+    @GetMapping("edit-transaction")
+    public String getEditTransaction(HttpServletRequest request, Model model) throws TransactionException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Transaction transaction = transactionServiceLayer.getTransactionById(id);
+        List<Account> accounts = accountServiceLayer.getAccountsByUserId(transaction.getFromAccount().getAccountOwner().getId());
+
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("accounts", accounts);
+        model.addAttribute("transaction", transaction);
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "edit-transaction";
+    }
+
+    @PostMapping("editTransaction")
+    public String editTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int newId = -1;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        formatter = formatter.withLocale(Locale.US);
+        try {
+            LocalDate date = LocalDate.parse(request.getParameter("date"), formatter);
+            int fromAccountId = Integer.parseInt(request.getParameter("from-account-id"));
+            int toAccountId = Integer.parseInt(request.getParameter("to-account-id"));
+            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+
+            Transaction transaction = new Transaction();
+            transaction.setId(id);
+            transaction.setDate(date);
+            transaction.setFromAccountId(fromAccountId);
+            transaction.setToAccountId(toAccountId);
+            transaction.setAmount(amount);
+
+            transaction = transactionServiceLayer.updateTransaction(transaction);
+            newId = transaction.getId();
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (AccountException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (TransactionException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (DateTimeParseException e) {
+            String errorMessage = "Date could not be parsed. Ensure that the date is in the appropriate format.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (NumberFormatException e) {
+            String errorMessage = "Transaction amount must be a decimal number.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        if (newId != -1) {
+            attributes.addAttribute("id", newId);
+        }
+
+        return "redirect:/edit-transaction";
     }
 }

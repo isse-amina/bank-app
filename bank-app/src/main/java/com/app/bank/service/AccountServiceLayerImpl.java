@@ -95,11 +95,19 @@ public class AccountServiceLayerImpl implements AccountServiceLayer {
             }
         }
         else {
-            throw  new AccountException("Account type must be 'Account' or 'Credit Card'.");
+            throw new AccountException("Account type must be 'Account' or 'Credit Card'.");
         }
-        BigDecimal accountBalance = account.getBalance();
-        if (accountBalance == null) {
-            throw new AccountException("Account balance cannot be null.");
+        try {
+            BigDecimal accountBalance = account.getBalance();
+            if (accountBalance == null) {
+                throw new AccountException("Account balance cannot be null.");
+            }
+            if (accountBalance.compareTo(new BigDecimal("0.00")) < 0 && accountType.equalsIgnoreCase("account")) {
+                throw new AccountException("Accounts of type 'Account' must have a positive balance.");
+            }
+        }
+        catch (NumberFormatException e) {
+            throw new AccountException("Account balance must be a decimal number.");
         }
     }
 

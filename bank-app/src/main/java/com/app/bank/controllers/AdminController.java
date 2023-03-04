@@ -314,6 +314,7 @@ public class AdminController {
             User user = userServiceLayer.getUserByEmail(ownerEmail);
 
             Account account = new Account();
+            account.setId(id);
             account.setName(name);
             account.setType(type);
             account.setNumber(number);

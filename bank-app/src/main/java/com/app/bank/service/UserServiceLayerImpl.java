@@ -25,6 +25,14 @@ public class UserServiceLayerImpl implements UserServiceLayer {
     }
 
     @Override
+    public User getUserByEmail(String email) throws UserException {
+        if (userDao.getUserByEmail(email) == null) {
+            validateUserExists(-1);
+        }
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
     public User addUser(User user) throws UserException {
         validateUserProperties(user);
         return userDao.addUser(user);

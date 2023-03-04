@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -152,6 +153,64 @@ public class AdminController {
         return "redirect:/add-user";
     }
 
+    @GetMapping("add-account")
+    public String getAddAccount(HttpServletRequest request, Model model) {
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "add-account";
+    }
+
+    @PostMapping("addAccount")
+    public String addAccount(HttpServletRequest request, RedirectAttributes attributes) {
+        try {
+            String name = request.getParameter("name");
+            String type = request.getParameter("type");
+            String number = request.getParameter("number");
+            BigDecimal balance = new BigDecimal(request.getParameter("balance"));
+            String ownerEmail = request.getParameter("owner-email");
+
+            User user = userServiceLayer.getUserByEmail(ownerEmail);
+
+            Account account = new Account();
+            account.setName(name);
+            account.setType(type);
+            account.setNumber(number);
+            account.setBalance(balance);
+            account.setAccountOwnerId(user.getId());
+
+            accountServiceLayer.addAccount(account);
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (AccountException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (NumberFormatException e) {
+            String errorMessage = "Account balance cannot be null.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        return "redirect:/add-account";
+    }
+
     @GetMapping("edit-user")
     public String getEditUser(HttpServletRequest request, Model model) throws UserException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -219,5 +278,70 @@ public class AdminController {
         }
 
         return "redirect:/edit-user";
+    }
+
+    @GetMapping("edit-account")
+    public String getEditAccount(HttpServletRequest request, Model model) throws AccountException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Account account = accountServiceLayer.getAccountById(id);
+
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("account", account);
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
+        return "edit-account";
+    }
+
+    @PostMapping("editAccount")
+    public String editAccount(HttpServletRequest request, RedirectAttributes attributes) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            String name = request.getParameter("name");
+            String type = request.getParameter("type");
+            String number = request.getParameter("number");
+            BigDecimal balance = new BigDecimal(request.getParameter("balance"));
+            String ownerEmail = request.getParameter("owner-email");
+
+            User user = userServiceLayer.getUserByEmail(ownerEmail);
+
+            Account account = new Account();
+            account.setName(name);
+            account.setType(type);
+            account.setNumber(number);
+            account.setBalance(balance);
+            account.setAccountOwnerId(user.getId());
+
+            accountServiceLayer.updateAccount(account);
+
+            attributes.addAttribute("status", "success");
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (AccountException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+        catch (NumberFormatException e) {
+            String errorMessage = "Account balance cannot be null.";
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+        }
+
+        attributes.addAttribute("id", id);
+
+        return "redirect:/edit-account";
     }
 }

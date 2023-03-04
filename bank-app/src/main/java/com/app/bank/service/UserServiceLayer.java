@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserServiceLayer {
     User getUserById(int id) throws UserException;
     List<User> getAllUsers();
+    User getUserByEmail(String email) throws UserException;
     User addUser(User user) throws UserException;
     void updateUser(User user) throws UserException;
     void deleteUserById(int id) throws UserException;

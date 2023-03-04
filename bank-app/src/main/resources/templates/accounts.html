@@ -31,7 +31,9 @@
                 <p>A new account must have a name, type, number, balance and owner.</p>
             </span>
             <span>
-                <img src="images/admin-add.png">
+                <a href="add-account">
+                    <img src="images/admin-add.png">
+                </a>
             </span>
         </div>
         <div class="view-container">
@@ -82,7 +84,9 @@
                             "Negative" Account Balance
                         </span>
                         <span>
-                            <img src="images/admin-edit.png">
+                            <a class="edit-button" th:href="@{/edit-account(id=${account.id})}" href="#" >
+                                <img src="images/admin-edit.png">
+                            </a>
                             <img class="admin-delete" src="images/admin-delete.png">
                         </span>
                         <div class="are-you-sure">

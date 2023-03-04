@@ -25,42 +25,34 @@
         </div>
     </nav>
     <div class="main-container">
-        <h3 th:text="'Edit User: ' + ${user.firstName} + ' ' + ${user.lastName}" class="header">Edit User</h3>
+        <h3 th:text="'Edit Account: ' + ${account.name} + ' ' + ${account.type}" class="header">Edit Account</h3>
         <div th:if="${status == 'success'}" class="success-container">
-            <p class="success-message">The user has been edited successfully.</p>
+            <p class="success-message">The account has been edited successfully.</p>
         </div>
         <div th:if="${error != 'none'}" class="error-container">
             <p th:text="${error}" class="error-message">An error has occurred.</p>
         </div>
-        <div class="warning-message">
-            <img src="images/admin-warning.png">
-            <p>
-                Warning!
-                Changing the user’s role from “user” to “admin” will result in the deletion of all accounts and transactions
-                associated with the user.
-            </p>
-        </div>
-        <form class="edit-form" novalidate action="editUser" method="POST">
+        <form class="edit-form" novalidate action="editAccount" method="POST">
             <div class="form-container">
-                <label>User ID: </label>
-                <input th:attr="value=${user.id}" class="readonly" name="id" type="text" readonly/>
-                <label>First Name: </label>
-                <input th:attr="value=${user.firstName}" name="first-name" type="text" required/>
-                <label>Last Name: </label>
-                <input th:attr="value=${user.lastName}" name="last-name" type="text" required/>
-                <label>Email: </label>
-                <input th:attr="value=${user.email}" name="email" type="text" required/>
-                <label>Password: </label>
-                <input th:attr="value=${user.password}" name="password" type="text" required/>
-                <label>Role: </label>
-                <select th:if="${user.role} == 'user'" name="role">
-                    <option>Admin</option>
-                    <option selected="selected">User</option>
+                <label>Acc. ID: </label>
+                <input th:attr="value=${account.id}" class="readonly" name="id" type="text" readonly/>
+                <label>Name: </label>
+                <input th:attr="value=${account.name}" name="name" type="text" required/>
+                <label>Type: </label>
+                <select th:if="${#strings.equalsIgnoreCase(account.type, 'account')}" name="type">
+                    <option selected="selected">Account</option>
+                    <option>Credit Card</option>
                 </select>
-                <select th:if="${user.role} == 'admin'" name="role">
-                    <option selected="selected">Admin</option>
-                    <option>User</option>
+                <select th:if="${#strings.equalsIgnoreCase(account.type, 'credit card')}" name="type">
+                    <option>Account</option>
+                    <option selected="selected">Credit Card</option>
                 </select>
+                <label>Number: </label>
+                <input th:attr="value=${account.number}" name="number" type="number" required/>
+                <label>Balance: </label>
+                <input th:attr="value=${account.balance}" name="balance" type="number" required/>
+                <label>Owner Email: </label>
+                <input th:attr="value=${account.accountOwner.email}" name="owner-email" type="text" required/>
             </div>
             <div class="admin-buttons">
                 <button class="submit-add" type="submit">Submit</button>
@@ -81,7 +73,7 @@
             </div>
         </div>
     </footer>
-<script src="js/admin.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

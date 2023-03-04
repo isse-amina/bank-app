@@ -16,6 +16,18 @@ cancelDeletion.forEach((item, index) => {
 const cancelAdd = document.querySelector(".cancel-add");
 if (cancelAdd != null) {
     cancelAdd.onclick = function() {
-        location.href = "/users";
+        var page = window.location.href;
+        if (page.includes("user")) {
+            location.href = "/users";
+        }
+        else if (page.includes("account")) {
+            location.href = "/accounts";
+        }
+        else if (page.includes("transaction")) {
+            location.href = "/transactions";
+        }
+        else {
+            location.href = "/admin";
+        }
     }
 }

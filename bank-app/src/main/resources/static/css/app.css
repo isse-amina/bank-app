@@ -1,0 +1,120 @@
+.apple-pay {
+    background-color: #DFF3FE;
+    border: 1px solid #0179C0;
+    border-radius: 10px;
+    padding: 20px;
+}
+.welcome-screen {
+    margin: 50px 0;
+    font-size: 20px;
+}
+.welcome-screen span:nth-child(2) {
+    font-weight: bold;
+}
+.account-container a {
+    height: 90px;
+    background-color: white;
+    padding: 20px;
+    margin: 20px 0;
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+    display: grid;
+    grid-template-columns: 75% 25%;
+    cursor: pointer;
+}
+.account-container a:hover {
+    text-decoration: none !important;
+}
+.account-container a p {
+    margin-bottom: 0px;
+}
+.account-type {
+    display: flex;
+}
+.account-type p:first-child {
+    font-weight: bold;
+    padding-right: 20px;
+}
+.account-sum {
+    text-align: right;
+}
+.open-account-prompt {
+    padding: 40px 20px;
+    border: 1px solid #0179C0;
+    color: #0179C0;
+}
+.open-account-prompt p {
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+}
+.history-container {
+    background-color: white;
+    margin: 20px 0;
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+}
+.history-container div {
+    display: grid;
+    grid-template-columns: 20% 25% 25% 20%;
+    grid-gap: 3.33%;
+    padding: 10px 20px;
+    border-bottom: 1px solid #E3E8F2;
+}
+.history-container div:first-child {
+    font-weight: bold;
+    padding-top: 20px;
+    background-color: #DFF3FE;
+}
+.history-container div:last-child {
+    border-bottom: none;
+}
+.account-details {
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+.account-details span {
+    display: flex;
+    justify-content: end;
+}
+.account-details span b {
+    padding-left: 7.5px;
+}
+.account-details span p {
+    padding-left: 5px;
+}
+.transfer-container {
+    background-color: white;
+    padding: 40px 20px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+}
+.transfer-options {
+    display: grid;
+    grid-template-columns: 15% 80%;
+    grid-column-gap: 5%;
+    grid-row-gap: 40px;
+}
+.transfer-options label {
+    font-weight: bold;
+}
+.transfer-options select,
+.transfer-options input {
+    height: 30px;
+}
+.transfer-buttons {
+    text-align: right;
+    margin-top: 40px;
+}
+.transfer-note {
+    line-height: 30px;
+}
+.contact-section {
+    margin-bottom: 40px;
+}

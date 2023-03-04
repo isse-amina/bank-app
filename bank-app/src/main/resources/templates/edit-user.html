@@ -42,10 +42,8 @@
         </div>
         <form class="edit-form" novalidate action="editUser" method="POST">
             <div class="form-container">
-                <div style="display: none;">
-                    <label>Account: </label>
-                    <input th:attr="value=${user.id}" name="id" type="text"/>
-                </div>
+                <label>Account: </label>
+                <input th:attr="value=${user.id}" class="readonly" name="id" type="text" readonly/>
                 <label>First Name: </label>
                 <input th:attr="value=${user.firstName}" name="first-name" type="text" required/>
                 <label>Last Name: </label>

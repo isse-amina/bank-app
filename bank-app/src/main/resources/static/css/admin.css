@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 .admin {
     background-color: #F4FAF6 !important;
-    font-family: 'Quicksand', sans-serif !important;
+    font-family: 'Poppins', sans-serif !important;
 }
 .admin .navbar {
     background-color: #01C07A;
@@ -178,4 +178,12 @@
 }
 .admin .warning-message p {
     margin-bottom: 0;
+}
+.admin .readonly {
+    background-color: #F8F8F8;
+    border: 1px solid #D1D1D1;
+    cursor: default;
+}
+.admin .readonly:focus {
+    outline: none;
 }

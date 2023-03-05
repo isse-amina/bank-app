@@ -33,6 +33,11 @@ public class UserServiceLayerImpl implements UserServiceLayer {
     }
 
     @Override
+    public List<User> getUsersByRole(String role) {
+        return userDao.getUsersByRole(role);
+    }
+
+    @Override
     public User addUser(User user) throws UserException {
         validateUserProperties(user);
         return userDao.addUser(user);

@@ -54,6 +54,15 @@ public class UserDaoDB implements UserDao {
     }
 
     @Override
+    public List<User> getUsersByRole(String role) {
+        final String GET_ALL_USERS_By_ROLE = "SELECT * " +
+                "FROM Users " +
+                "WHERE user_role = ?";
+        List<User> users = jdbc.query(GET_ALL_USERS_By_ROLE, new UserMapper(), role);
+        return users;
+    }
+
+    @Override
     @Transactional
     public User addUser(User user) {
         final String ADD_USER = "INSERT INTO Users(user_first_name, user_last_name, user_email, user_password, user_role) " +

@@ -8,6 +8,7 @@ public interface UserDao {
     User getUserById(int id);
     List<User> getAllUsers();
     User getUserByEmail(String email);
+    List<User> getUsersByRole(String role);
     User addUser(User user);
     void updateUser(User user);
     void deleteUserById(int id);

@@ -35,12 +35,12 @@ public class AdminController {
     @Autowired
     TransactionServiceLayer transactionServiceLayer;
 
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String getAdmin(Model model) {
         return "admin";
     }
 
-    @GetMapping("/users")
+    @GetMapping("users")
     public String getUsers(Model model) {
         List<User> users = userServiceLayer.getAllUsers();
 
@@ -49,7 +49,7 @@ public class AdminController {
         return "users";
     }
 
-    @GetMapping("/accounts")
+    @GetMapping("accounts")
     public String getAccounts(Model model) throws AccountException {
         List<User> users = userServiceLayer.getAllUsers();
         List<Account> accounts = accountServiceLayer.getAllAccounts();
@@ -77,7 +77,7 @@ public class AdminController {
         return "accounts";
     }
 
-    @GetMapping("/transactions")
+    @GetMapping("transactions")
     public String getTransactions(Model model) {
         List<User> users = userServiceLayer.getAllUsers();
         List<Transaction> transactions = transactionServiceLayer.getAllTransactions();

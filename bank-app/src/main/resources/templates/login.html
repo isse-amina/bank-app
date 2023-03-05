@@ -24,14 +24,17 @@
         <div class="login-container">
             <form class="login-form">
                 <h5>User Login</h5>
+                <div th:if="${(param.error != null) and (param.error[0] == 'true')}" class="error-container">
+                    <p class="error-message">Login failed.</p>
+                </div>
                 <div class="login-fields">
                     <label>Email</label>
-                    <input id="email" name="email" type="text" required/>
+                    <input name="email" type="text" required/>
                     <label>Password</label>
-                    <input id="password" name="password" type="text" required/>
+                    <input name="password" type="text" required/>
                 </div>
                 <div class="login-buttons">
-                    <button value="Log in" type="submit">Sign in</button>
+                    <button type="submit">Sign in</button>
                     <button>Create an account</button>
                 </div>
             </form>
@@ -44,7 +47,7 @@
                     <input name="email" type="text" required/>
                 </div>
                 <div class="login-buttons">
-                    <button>Sign in</button>
+                    <button type="submit">Sign in</button>
                 </div>
             </form>
         </div>

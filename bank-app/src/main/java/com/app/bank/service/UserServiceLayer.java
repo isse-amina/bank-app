@@ -9,6 +9,7 @@ public interface UserServiceLayer {
     User getUserById(int id) throws UserException;
     List<User> getAllUsers();
     User getUserByEmail(String email) throws UserException;
+    List<User> getUsersByRole(String role);
     User addUser(User user) throws UserException;
     void updateUser(User user) throws UserException;
     void deleteUserById(int id) throws UserException;

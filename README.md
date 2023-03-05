@@ -1,5 +1,6 @@
 # International Bank
 
+<img src="https://github.com/isse-amina/bank-app/blob/main/bank-app/sql/model.png">
 <h2>Users</h2>
 <ul>
     <li>All users must have the following properties: first name, last name, email, password and role.</li>

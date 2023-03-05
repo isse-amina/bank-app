@@ -1,0 +1,26 @@
+.login-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 50px;
+}
+.login-form {
+    background-color: white;
+    margin: 20px 0;
+    -moz-box-shadow: 0 0 5px #D0D0D0;
+    -webkit-box-shadow: 0 0 5px #D0D0D0;
+    box-shadow: 0 0 5px #D0D0D0;
+    padding: 40px 20px;
+}
+.login-fields {
+    margin: 25px 0;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-row-gap: 10px;
+}
+.login-fields input {
+    height: 40px;
+}
+.login-buttons {
+    margin-top: 20px;
+    text-align: right;
+}

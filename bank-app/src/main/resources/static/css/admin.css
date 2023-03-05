@@ -195,3 +195,10 @@
 .email-container label {
     font-weight: 600;
 }
+.main-container.information {
+    line-height: 30px;
+}
+.main-container.information h5 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,25 @@
+.error {
+    background-color: #FFF7F7 !important;
+}
+.error .navbar {
+    background-color: #FF5F5F;
+}
+.error-page {
+    text-align: center;
+    margin: 50px 0;
+}
+.error-page img {
+    width: 100px;
+}
+.error-page h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.error-page button {
+    border: 1px solid #FF5F5F;
+    color: #FF5F5F;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 20px 40px;
+    margin-top: 40px;
+}

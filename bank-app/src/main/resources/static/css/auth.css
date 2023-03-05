@@ -3,7 +3,13 @@
     grid-template-columns: 50% 50%;
     grid-gap: 50px;
 }
-.login-form {
+.register-container {
+    width: 65%;
+    max-width: 550px;
+    margin: auto;
+}
+.login-form,
+.register-form {
     background-color: white;
     margin: 10px 0;
     -moz-box-shadow: 0 0 5px #D0D0D0;
@@ -11,19 +17,23 @@
     box-shadow: 0 0 5px #D0D0D0;
     padding: 40px 20px;
 }
-.login-form h5 {
+.login-form h5,
+.register form h5 {
     margin-bottom: 10px;
 }
-.login-fields {
+.login-fields,
+.register-fields {
     margin: 25px 0;
     display: grid;
     grid-template-columns: 100%;
     grid-row-gap: 10px;
 }
-.login-fields input {
+.login-fields input,
+.register-fields input {
     height: 40px;
 }
-.login-buttons {
+.login-buttons,
+.register-buttons {
     margin-top: 50px;
     text-align: right;
 }

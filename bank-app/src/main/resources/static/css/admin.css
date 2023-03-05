@@ -145,26 +145,26 @@
     background-color: transparent;
     border: none;
 }
-.admin .add-form,
-.admin .edit-form {
+.add-form,
+.edit-form {
     margin-top: 40px;
 }
-.admin .form-container {
+.form-container {
     display: grid;
     grid-template-columns: 15% 80%;
     grid-row-gap: 40px;
     grid-column-gap: 5%;
 }
-.admin .form-container input,
-.admin .form-container select {
+.form-container input,
+.form-container select {
     height: 30px;
 }
-.admin .add-form .admin-buttons,
-.admin .edit-form .admin-buttons {
+.add-form .admin-buttons,
+.edit-form .admin-buttons {
     margin-top: 40px;
     text-align: right;
 }
-.admin .warning-message {
+.warning-message {
     display: grid;
     grid-template-columns: 7.5% 85%;
     grid-gap: 2.5%;
@@ -173,25 +173,25 @@
     border: 1px solid #CDB20C;
     margin-top: 40px;
 }
-.admin .warning-message img {
+.warning-message img {
     height: 50px;
 }
-.admin .warning-message p {
+.warning-message p {
     margin-bottom: 0;
 }
-.admin .readonly {
+.readonly {
     background-color: #F8F8F8;
     border: 1px solid #D1D1D1;
     cursor: default;
 }
-.admin .readonly:focus {
+.readonly:focus {
     outline: none;
 }
-.admin .email-container {
+.email-container {
     display: grid;
     grid-template-columns: 100%;
     grid-row-gap: 20px;
 }
-.admin .email-container label {
+.email-container label {
     font-weight: 600;
 }

@@ -1,4 +1,4 @@
-# International Bank
+# Banking App
 
 <h2>General Information</h2>
 <p>

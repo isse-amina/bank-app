@@ -26,6 +26,8 @@ import java.util.Locale;
 
 @Controller
 public class AdminController {
+    User user;
+
     @Autowired
     UserServiceLayer userServiceLayer;
 
@@ -36,12 +38,39 @@ public class AdminController {
     TransactionServiceLayer transactionServiceLayer;
 
     @GetMapping("admin")
-    public String getAdmin(Model model) {
+    public String getAdmin(HttpServletRequest request, Model model, RedirectAttributes attributes) {
+        // placeholder starts
+        String status = request.getParameter("status");
+        Object userId = model.asMap().get("userId");
+        if (user == null) {
+            if (status == null || userId == null) {
+                return "redirect:/login";
+            }
+            else {
+                try {
+                    user = userServiceLayer.getUserById(Integer.parseInt(userId.toString()));
+                }
+                catch (UserException e){
+                    String errorMessage = e.getMessage();
+                    attributes.addAttribute("status", "failed");
+                    attributes.addAttribute("error", errorMessage);
+                    return "redirect:/login";
+                }
+            }
+        }
+        // placeholder ends
+
         return "admin";
     }
 
     @GetMapping("users")
     public String getUsers(Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         List<User> users = userServiceLayer.getAllUsers();
 
         model.addAttribute("users", users);
@@ -51,6 +80,12 @@ public class AdminController {
 
     @GetMapping("accounts")
     public String getAccounts(Model model) throws AccountException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         List<User> users = userServiceLayer.getAllUsers();
         List<Account> accounts = accountServiceLayer.getAllAccounts();
 
@@ -79,6 +114,12 @@ public class AdminController {
 
     @GetMapping("transactions")
     public String getTransactions(Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         List<User> users = userServiceLayer.getAllUsers();
         List<Transaction> transactions = transactionServiceLayer.getAllTransactions();
 
@@ -90,6 +131,12 @@ public class AdminController {
 
     @GetMapping("deleteUser")
     public String deleteUser(HttpServletRequest request) throws UserException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         userServiceLayer.deleteUserById(id);
 
@@ -106,6 +153,12 @@ public class AdminController {
 
     @GetMapping("deleteTransaction")
     public String deleteTransaction(HttpServletRequest request) throws TransactionException, AccountException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         transactionServiceLayer.deleteTransactionById(id);
 
@@ -114,6 +167,12 @@ public class AdminController {
 
     @GetMapping("add-user")
     public String getAddUser(HttpServletRequest request, Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         String status = request.getParameter("status");
         if (status == null || !status.equalsIgnoreCase("success")) {
             status = "none";
@@ -131,6 +190,12 @@ public class AdminController {
 
     @PostMapping("addUser")
     public String addUser(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         try {
             String firstName = request.getParameter("first-name");
             String lastName = request.getParameter("last-name");
@@ -159,6 +224,12 @@ public class AdminController {
 
     @GetMapping("add-account")
     public String getAddAccount(HttpServletRequest request, Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         String status = request.getParameter("status");
         if (status == null || !status.equalsIgnoreCase("success")) {
             status = "none";
@@ -176,6 +247,12 @@ public class AdminController {
 
     @PostMapping("addAccount")
     public String addAccount(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         try {
             String name = request.getParameter("name");
             String type = request.getParameter("type");
@@ -217,6 +294,12 @@ public class AdminController {
 
     @GetMapping("add-transaction")
     public String getAddTransaction(HttpServletRequest request, Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         String status = request.getParameter("status");
         if (status == null || !status.equalsIgnoreCase("success")) {
             status = "none";
@@ -246,6 +329,12 @@ public class AdminController {
 
     @PostMapping("addUserToTransaction")
     public String addUserToTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         try {
             String userEmail = request.getParameter("user-email");
             User user = userServiceLayer.getUserByEmail(userEmail);
@@ -266,6 +355,12 @@ public class AdminController {
 
     @PostMapping("addTransaction")
     public String addTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         String userEmail = request.getParameter("user-email");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale(Locale.US);
@@ -321,6 +416,12 @@ public class AdminController {
 
     @GetMapping("edit-user")
     public String getEditUser(HttpServletRequest request, Model model) throws UserException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         User user = userServiceLayer.getUserById(id);
 
@@ -342,6 +443,12 @@ public class AdminController {
 
     @PostMapping("editUser")
     public String editUser(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         int newId = -1;
         try {
@@ -390,6 +497,12 @@ public class AdminController {
 
     @GetMapping("edit-account")
     public String getEditAccount(HttpServletRequest request, Model model) throws AccountException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         Account account = accountServiceLayer.getAccountById(id);
 
@@ -411,6 +524,12 @@ public class AdminController {
 
     @PostMapping("editAccount")
     public String editAccount(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         try {
             String name = request.getParameter("name");
@@ -456,6 +575,12 @@ public class AdminController {
 
     @GetMapping("edit-transaction")
     public String getEditTransaction(HttpServletRequest request, Model model) throws TransactionException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         Transaction transaction = transactionServiceLayer.getTransactionById(id);
         List<Account> accounts = accountServiceLayer.getAccountsByUserId(transaction.getFromAccount().getAccountOwner().getId());
@@ -479,6 +604,12 @@ public class AdminController {
 
     @PostMapping("editTransaction")
     public String editTransaction(HttpServletRequest request, RedirectAttributes attributes) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int id = Integer.parseInt(request.getParameter("id"));
         int newId = -1;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -527,5 +658,13 @@ public class AdminController {
         }
 
         return "redirect:/edit-transaction";
+    }
+
+    @GetMapping("adminLogout")
+    public String adminLogout(RedirectAttributes attributes) {
+        user = null;
+        attributes.addAttribute("status", null);
+
+        return "redirect:/login";
     }
 }

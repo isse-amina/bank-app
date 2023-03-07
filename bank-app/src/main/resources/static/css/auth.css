@@ -1,7 +1,7 @@
 .login-container {
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 50px;
+    grid-template-columns: 47.5% 47.5%;
+    grid-gap: 5%;
 }
 .register-container {
     width: 65%;

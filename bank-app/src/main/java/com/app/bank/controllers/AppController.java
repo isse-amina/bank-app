@@ -5,6 +5,7 @@ import com.app.bank.dto.Transaction;
 import com.app.bank.dto.User;
 import com.app.bank.exceptions.AccountException;
 import com.app.bank.exceptions.TransactionException;
+import com.app.bank.exceptions.UserException;
 import com.app.bank.service.AccountServiceLayer;
 import com.app.bank.service.TransactionServiceLayer;
 import com.app.bank.service.UserServiceLayer;
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Controller
 public class AppController {
+    User user;
+
     @Autowired
     UserServiceLayer userServiceLayer;
 
@@ -33,10 +36,26 @@ public class AppController {
     TransactionServiceLayer transactionServiceLayer;
 
     @GetMapping("/")
-    public String getIndex(Model model) throws AccountException {
+    public String getIndex(HttpServletRequest request, Model model, RedirectAttributes attributes) throws AccountException {
         // placeholder starts
-        List<User> users = userServiceLayer.getAllUsers();
-        User user = users.get(0);
+        String status = request.getParameter("status");
+        Object userId = model.asMap().get("userId");
+        if (user == null) {
+            if (status == null || userId == null) {
+                return "redirect:/login";
+            }
+            else {
+                try {
+                    user = userServiceLayer.getUserById(Integer.parseInt(userId.toString()));
+                }
+                catch (UserException e){
+                    String errorMessage = e.getMessage();
+                    attributes.addAttribute("status", "failed");
+                    attributes.addAttribute("error", errorMessage);
+                    return "redirect:/login";
+                }
+            }
+        }
         // placeholder ends
 
         List<Account> accounts = accountServiceLayer.getAccountsByUserId(user.getId());
@@ -68,6 +87,12 @@ public class AppController {
 
     @GetMapping("history")
     public String viewOrganizations(HttpServletRequest request, Model model) throws AccountException {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         int accountId = Integer.parseInt(request.getParameter("id"));
         Account account = accountServiceLayer.getAccountById(accountId);
         String accountType = account.getType();
@@ -93,10 +118,11 @@ public class AppController {
 
     @GetMapping("transfer")
     public String getTransfer(HttpServletRequest request, Model model) {
-        // placeholder starts
-        List<User> users = userServiceLayer.getAllUsers();
-        User user = users.get(0);
-        // placeholder ends
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
 
         List<Account> accounts = accountServiceLayer.getAccountsByUserId(user.getId());
         List<Account> bankAccounts = new ArrayList<>();
@@ -126,10 +152,11 @@ public class AppController {
 
     @PostMapping("executeTransfer")
     public String executeTransfer(HttpServletRequest request, RedirectAttributes attributes) {
-        // placeholder starts
-        List<User> users = userServiceLayer.getAllUsers();
-        User user = users.get(0);
-        // placeholder ends
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
 
         try {
             int bankAccountId = Integer.parseInt(request.getParameter("bank-account"));
@@ -171,6 +198,20 @@ public class AppController {
 
     @GetMapping("contact")
     public String getContact(Model model) {
+        //placeholder starts
+        if (user == null) {
+            return "redirect:/login";
+        }
+        //placeholder ends
+
         return "contact";
+    }
+
+    @GetMapping("userLogout")
+    public String userLogout(RedirectAttributes attributes) {
+        user = null;
+        attributes.addAttribute("status", null);
+
+        return "redirect:/login";
     }
 }

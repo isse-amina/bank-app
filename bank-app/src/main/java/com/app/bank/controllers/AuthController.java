@@ -64,6 +64,70 @@ public class AuthController {
 
     @GetMapping("login")
     public String getLogin(HttpServletRequest request, Model model) {
+        String status = request.getParameter("status");
+        if (status == null || !status.equalsIgnoreCase("success")) {
+            status = "none";
+        }
+        String error = request.getParameter("error");
+        if (error == null) {
+            error = "none";
+        }
+
+        model.addAttribute("status", status);
+        model.addAttribute("error", error);
+
         return "login";
+    }
+
+    @PostMapping("loginUser")
+    public String loginUser(HttpServletRequest request, RedirectAttributes attributes) {
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            User user = userServiceLayer.getUserByEmail(email);
+            if (user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("user")) {
+                attributes.addFlashAttribute("userId", user.getId());
+                attributes.addAttribute("status", "success");
+
+                return "redirect:/";
+            }
+            else {
+                throw new UserException("Login failed. Please ensure that your email and password are correct.");
+            }
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("loginAdmin")
+    public String loginAdmin(HttpServletRequest request, RedirectAttributes attributes) {
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            User user = userServiceLayer.getUserByEmail(email);
+            if (user.getPassword().equals(password) && user.getRole().equalsIgnoreCase("admin")) {
+                attributes.addFlashAttribute("userId", user.getId());
+                attributes.addAttribute("status", "success");
+
+                return "redirect:/admin";
+            }
+            else {
+                throw new UserException("Login failed. Please ensure that your email and password are correct.");
+            }
+        }
+        catch (UserException e) {
+            String errorMessage = e.getMessage();
+            attributes.addAttribute("status", "failed");
+            attributes.addAttribute("error", errorMessage);
+
+            return "redirect:/login";
+        }
     }
 }

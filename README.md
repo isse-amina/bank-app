@@ -1,4 +1,4 @@
-# Banking App
+# Bank App
 
 <h2>General Information</h2>
 <p>
